@@ -39,3 +39,7 @@ npm-debug.log
 *.db
 *.db-*
 
+/.devenv/
+/.elixir_ls/
+/.goose/
+/.direnv
