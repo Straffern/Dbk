@@ -7,9 +7,8 @@ defmodule Dbk.Dst.Store do
 
   require Logger
 
-  # Define the client module at runtime to avoid compile-time dependency
-  @http_client Module.concat(["Dbk", "Http", "FinchClient"])
-  @client Application.compile_env(:dbk, :http_client, @http_client)
+  # Get the HTTP client to use, defaulting to FinchClient in non-test environments
+  @client Application.compile_env(:dbk, :http_client, Dbk.Http.FinchClient)
 
   @base_url "https://api.statbank.dk/v1"
 

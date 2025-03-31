@@ -1,17 +1,13 @@
 defmodule Dbk.Http.Client do
   @moduledoc """
-  Behaviour for HTTP client implementations.
+  Behaviour for HTTP clients used in the application.
   """
 
-  @type method :: :get | :post
-  @type headers :: [{String.t(), String.t()}]
-  @type response :: {:ok, %{status: integer(), body: term()}} | {:error, term()}
-
   @callback request(
-              method(),
-              String.t(),
-              headers(),
-              term(),
-              keyword()
-            ) :: response()
+    method :: :get | :post | :put | :delete,
+    url :: String.t(),
+    headers :: list(),
+    body :: term(),
+    opts :: keyword()
+  ) :: {:ok, map()} | {:error, term()}
 end

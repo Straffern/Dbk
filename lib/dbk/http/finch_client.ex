@@ -1,14 +1,22 @@
 defmodule Dbk.Http.FinchClient do
   @moduledoc """
-  HTTP client implementation using Finch.
+  Finch-based implementation of the HTTP client behaviour.
   """
-
   @behaviour Dbk.Http.Client
 
   @impl true
-  def request(_method, _url, _headers, _body, _opts) do
-    # Implementation would go here
-    # For test purposes, we'll just return a mock response
-    {:ok, %{status: 200, body: %{}}}
+  def request(method, url, headers, body, _opts) do
+    json_body = Jason.encode!(body)
+    headers = [{"content-type", "application/json"} | headers]
+
+    Finch.build(method, url, headers, json_body)
+    |> Finch.request(DbkFinch)
+    |> case do
+      {:ok, %Finch.Response{status: status, body: body}} ->
+        {:ok, %{status: status, body: Jason.decode!(body)}}
+
+      {:error, _} = error ->
+        error
+    end
   end
 end
