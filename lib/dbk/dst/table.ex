@@ -1,7 +1,8 @@
 defmodule Dbk.Dst.Table do
   use Ash.Resource,
     domain: Dbk.Dst,
-    data_layer: Ash.DataLayer.Ets
+    data_layer: Ash.DataLayer.Ets,
+    authorizers: [Ash.Authorizer.Always]
 
   alias Dbk.Dst
 
@@ -17,7 +18,7 @@ defmodule Dbk.Dst.Table do
     attribute(:first_period, :string)
     attribute(:latest_period, :string)
     attribute(:active, :boolean, allow_nil?: false, default: true)
-    attribute(:variables, {:array, :string}, default: [])
+    attribute(:variables, :integer, default: 0)
   end
 
   relationships do

@@ -7,7 +7,10 @@ defmodule Dbk.Dst.Store do
 
   require Logger
 
-  @client Application.compile_env(:dbk, :http_client, Dbk.Http.FinchClient)
+  # Define the client module at runtime to avoid compile-time dependency
+  @http_client Module.concat(["Dbk", "Http", "FinchClient"])
+  @client Application.compile_env(:dbk, :http_client, @http_client)
+
   @base_url "https://api.statbank.dk/v1"
 
   @doc """
@@ -16,9 +19,13 @@ defmodule Dbk.Dst.Store do
   ## Endpoints
   POST #{@base_url}/subjects
 
-  Payload parameters will be documented when specified.
+  ## Parameters
+  - subjects: Optional list of subject IDs to fetch
+  - includeTables: Boolean, whether to include tables in the response
+  - recursive: Boolean, whether to fetch subjects recursively
+  - omitInactiveSubjects: Boolean, whether to exclude inactive subjects
   """
-  @spec fetch_subjects(map()) :: {:ok, map()} | {:error, any()}
+  @spec fetch_subjects(map()) :: {:ok, list(map())} | {:error, any()}
   def fetch_subjects(params \\ %{}) do
     "#{@base_url}/subjects"
     |> post(params)
@@ -31,7 +38,11 @@ defmodule Dbk.Dst.Store do
   ## Endpoints
   POST #{@base_url}/tables
 
-  Payload parameters will be documented when specified.
+  ## Parameters
+  - subjects: Optional list of subject IDs to limit tables by subject
+  - pastDays: Optional integer, number of days to look back for updates
+  - includeInactive: Boolean, whether to include inactive tables
+  - format: Result format (JSON, CSV, etc)
   """
   @spec fetch_tables(map()) :: {:ok, map()} | {:error, any()}
   def fetch_tables(params \\ %{}) do
@@ -46,7 +57,9 @@ defmodule Dbk.Dst.Store do
   ## Endpoints
   POST #{@base_url}/tableinfo
 
-  Payload parameters will be documented when specified.
+  ## Parameters
+  - table: Table ID to fetch information for
+  - language: Optional language code (default: da)
   """
   @spec fetch_table_info(map()) :: {:ok, map()} | {:error, any()}
   def fetch_table_info(params \\ %{}) do
@@ -61,15 +74,25 @@ defmodule Dbk.Dst.Store do
   ## Endpoints
   POST #{@base_url}/data
 
-  Payload parameters will be documented when specified.
+  ## Parameters
+  - table: Table ID to fetch data from
+  - format: Result format (required, e.g. "json")
+  - variables: List of variable selections
+  - valuePresentation: Optional value presentation format
+  - timeOrder: Optional time sort order
   """
   @spec fetch_data(map()) :: {:ok, map()} | {:error, any()}
   def fetch_data(params \\ %{}) do
+    params = Map.put_new(params, "format", "json")
     "#{@base_url}/data"
     |> post(params)
     |> handle_response()
   end
 
+  @doc """
+  Parses a subject response into a structured map.
+  Handles nested subjects recursively, assigning parent IDs as needed.
+  """
   def parse_subject(json, parent_id \\ nil) do
     %{
       id: json["id"],
@@ -77,11 +100,15 @@ defmodule Dbk.Dst.Store do
       active: json["active"],
       has_subjects: json["hasSubjects"],
       parent_id: parent_id,
-      children: Enum.map(json["subjects"], &parse_subject(&1, json["id"])),
-      tables: Enum.map(json["tables"], &parse_table(&1, json["id"]))
+      children: Enum.map(json["subjects"] || [], &parse_subject(&1, json["id"])),
+      tables: Enum.map(json["tables"] || [], &parse_table(&1, json["id"]))
     }
   end
 
+  @doc """
+  Parses a table response into a structured map.
+  Associates the table with a subject via subject_id.
+  """
   def parse_table(json, subject_id) do
     %{
       id: json["id"],
