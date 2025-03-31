@@ -3,16 +3,31 @@ defmodule Dbk.Dst.Subject do
     domain: Dbk.Dst,
     data_layer: Ash.DataLayer.Ets
 
-  alias Dbg.Dst
+  alias Dbk.Dst
   alias Dbk.Dst.Store
 
   actions do
     defaults([:create, :read, :update, :destroy])
 
     action :refresh do
+      argument(:subjects, {:array, :integer}, allow_nil?: true, description: "list of ids")
+      argument(:include_tables, :boolean, allow_nil?: false, default: false)
+      argument(:recursive, :boolean, allow_nil?: false, default: false)
+      argument(:omit_inactive_subjects, :boolean, allow_nil?: false, default: false)
+
       run(fn input, _ ->
         __MODULE__.read!(paginated: true) |> Enum.each(&Subject.destroy!(&1))
-        data = Store.fetch_subjects()
+        
+        params = %{
+          "subjects" => input.arguments[:subjects],
+          "includeTables" => input.arguments[:include_tables],
+          "recursive" => input.arguments[:recursive],
+          "omitInactiveSubjects" => input.arguments[:omit_inactive_subjects]
+        }
+        |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+        |> Map.new()
+
+        {:ok, data} = Store.fetch_subjects(params)
         top_level_subjects = Enum.map(data, &Store.parse_subject/1)
 
         Enum.each(top_level_subjects, fn subject_data ->
