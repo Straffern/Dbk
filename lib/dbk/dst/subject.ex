@@ -1,18 +1,26 @@
 defmodule Dbk.Dst.Subject do
   use Ash.Resource,
     domain: Dbk.Dst,
-    data_layer: Ash.DataLayer.Simple
+    data_layer: Ash.DataLayer.Ets
 
-  alias Dbk.Dst
+  alias Dbg.Dst
+  alias Dbk.Dst.Store
 
   actions do
-    read :list_subjects do
-      argument(:subjects, {:array, :integer}, allow_nil?: true, description: "list of ids")
-      argument(:include_tables, :boolean, allow_nil?: false, default: false)
-      argument(:recursive, :boolean, allow_nil?: false, default: false)
-      argument(:omit_inactive_subjects, :boolean, allow_nil?: false, default: false)
+    defaults([:create, :read, :update, :destroy])
 
-      manual(__MODULE__.ManualRead)
+    action :refresh do
+      run(fn input, _ ->
+        __MODULE__.read!(paginated: true) |> Enum.each(&Subject.destroy!(&1))
+        data = Store.fetch_subjects()
+        top_level_subjects = Enum.map(data, &Store.parse_subject/1)
+
+        Enum.each(top_level_subjects, fn subject_data ->
+          Subject.create!(subject_data, authorize?: false)
+        end)
+
+        :ok
+      end)
     end
   end
 
@@ -22,8 +30,8 @@ defmodule Dbk.Dst.Subject do
 
     # Basic attributes from API
     attribute(:description, :string, allow_nil?: false)
-    attribute(:active, :boolean, allow_nil?: false, default: true)
-    attribute(:has_subjects, :boolean, allow_nil?: false, default: false)
+    attribute(:active, :boolean, default: true)
+    attribute(:has_subjects, :boolean, default: false)
   end
 
   relationships do
@@ -35,17 +43,19 @@ defmodule Dbk.Dst.Subject do
       allow_nil?(true)
     end
 
-    has_many :subsubjects, __MODULE__ do
+    has_many :children, __MODULE__ do
       destination_attribute(:parent_id)
+      relationship_context(%{on_delete: :delete})
     end
 
     # Relationship to tables within this subject
     has_many :tables, Dst.Table do
       destination_attribute(:subject_id)
+      relationship_context(%{on_delete: :delete})
     end
   end
 
-  calculations do
-    calculate(:api_url, :string, expr("https://api.statbank.dk/v1/subjects"))
-  end
+  # calculations do
+  #   calculate(:api_url, :string, expr("https://api.statbank.dk/v1/subjects"))
+  # end
 end

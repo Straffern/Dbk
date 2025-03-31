@@ -1,20 +1,12 @@
 defmodule Dbk.Dst.Table do
   use Ash.Resource,
     domain: Dbk.Dst,
-    data_layer: Ash.DataLayer.Simple
+    data_layer: Ash.DataLayer.Ets
 
   alias Dbk.Dst
 
   actions do
-    defaults([:create, :update, :destroy])
-
-    read :read do
-      manual(__MODULE__.ManualRead)
-
-      argument(:subjects, {:array, :string}, allow_nil?: true)
-      argument(:pastdays, :integer, allow_nil?: true)
-      argument(:includeinactive, :boolean, default: false)
-    end
+    defaults([:create, :read, :update, :destroy])
   end
 
   attributes do
@@ -36,7 +28,7 @@ defmodule Dbk.Dst.Table do
     end
   end
 
-  calculations do
-    calculate(:api_url, :string, expr("https://api.statbank.dk/v1/tables"))
-  end
+  # calculations do
+  #   calculate(:api_url, :string, expr("https://api.statbank.dk/v1/tables"))
+  # end
 end
