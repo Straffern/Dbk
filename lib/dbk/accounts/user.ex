@@ -46,15 +46,6 @@ defmodule Dbk.Accounts.User do
     repo Dbk.Repo
   end
 
-  attributes do
-    uuid_primary_key(:id)
-
-    attribute :email, :ci_string do
-      allow_nil?(false)
-      public?(true)
-    end
-  end
-
   actions do
     defaults([:read])
 
@@ -102,6 +93,15 @@ defmodule Dbk.Accounts.User do
       end
 
       run(AshAuthentication.Strategy.MagicLink.Request)
+    end
+  end
+
+  attributes do
+    uuid_primary_key(:id)
+
+    attribute :email, :ci_string do
+      allow_nil?(false)
+      public?(true)
     end
   end
 
