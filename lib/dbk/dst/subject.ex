@@ -20,7 +20,7 @@ defmodule Dbk.Dst.Subject do
 
       change(fn changeset, _context ->
         # Clean up existing records
-        __MODULE__.read!(paginated: true) |> Enum.each(&__MODULE__.destroy!(&1))
+        Ash.read!(__MODULE__, paginated: true) |> Enum.each(&Ash.destroy!(&1))
 
         # Build API params
         params =
@@ -38,7 +38,7 @@ defmodule Dbk.Dst.Subject do
         top_level_subjects = Enum.map(data, &Store.parse_subject/1)
 
         # Create records for all subjects
-        Enum.each(top_level_subjects, &__MODULE__.create!(&1))
+        Enum.each(top_level_subjects, &Ash.create!(__MODULE__, &1))
 
         changeset
       end)
