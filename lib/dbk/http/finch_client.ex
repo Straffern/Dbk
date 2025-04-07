@@ -10,7 +10,7 @@ defmodule Dbk.Http.FinchClient do
     headers = [{"content-type", "application/json"} | headers]
 
     Finch.build(method, url, headers, json_body)
-    |> Finch.request(DbkFinch)
+    |> Finch.request(Dbk.Finch)
     |> case do
       {:ok, %Finch.Response{status: status, body: body}} ->
         {:ok, %{status: status, body: Jason.decode!(body)}}
@@ -20,3 +20,4 @@ defmodule Dbk.Http.FinchClient do
     end
   end
 end
+

@@ -83,6 +83,7 @@ defmodule Dbk.Dst.Store do
   @spec fetch_data(map()) :: {:ok, map()} | {:error, any()}
   def fetch_data(params \\ %{}) do
     params = Map.put_new(params, "format", "json")
+
     "#{@base_url}/data"
     |> post(params)
     |> handle_response()

@@ -1,74 +1,98 @@
 defmodule Dbk.Dst.Subject do
   use Ash.Resource,
     domain: Dbk.Dst,
-    data_layer: Ash.DataLayer.Ets,
-    authorizers: [Ash.Authorizer.Always]
+    data_layer: AshSqlite.DataLayer
 
   require Ash.Query
 
   alias Dbk.Dst
   alias Dbk.Dst.Store
 
+  sqlite do
+    table "subjects"
+    repo Dbk.Repo
+
+    references do
+      reference :parent, on_delete: :delete
+    end
+  end
+
   actions do
-    defaults([:create, :read, :update, :destroy])
+    defaults [:read, :destroy]
+    default_accept [:id, :description, :has_subjects, :parent_id, :active]
 
-    create :refresh do
-      argument(:subjects, {:array, :string}, allow_nil?: true, description: "list of ids")
-      argument(:include_tables, :boolean, allow_nil?: false, default: false)
-      argument(:recursive, :boolean, allow_nil?: false, default: false)
-      argument(:omit_inactive_subjects, :boolean, allow_nil?: false, default: false)
+    create :create do
+      primary? true
 
-      change(fn changeset, _context ->
-        # Clean up existing records
-        Ash.read!(__MODULE__, paginated: true) |> Enum.each(&Ash.destroy!(&1))
+      argument :children, {:array, :map}
+      argument :tables, {:array, :map}
 
+      upsert? true
+      upsert_identity :id
+
+      change manage_relationship(:children, type: :create)
+      change manage_relationship(:tables, type: :create)
+    end
+
+    action :refresh do
+      argument :subjects, {:array, :string}, allow_nil?: true, description: "list of ids"
+      argument :include_tables, :boolean, allow_nil?: false, default: false
+      argument :recursive, :boolean, allow_nil?: false, default: false
+      argument :omit_inactive_subjects, :boolean, allow_nil?: false, default: false
+
+      run fn input, _context ->
         # Build API params
         params =
           %{
-            "subjects" => changeset.arguments[:subjects],
-            "includeTables" => changeset.arguments[:include_tables],
-            "recursive" => changeset.arguments[:recursive],
-            "omitInactiveSubjects" => changeset.arguments[:omit_inactive_subjects]
+            "subjects" => input.arguments[:subjects],
+            "includeTables" => input.arguments[:include_tables],
+            "recursive" => input.arguments[:recursive],
+            "omitInactiveSubjects" => input.arguments[:omit_inactive_subjects]
           }
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
           |> Map.new()
 
         # Fetch and parse data
         {:ok, data} = Store.fetch_subjects(params)
-        top_level_subjects = Enum.map(data, &Store.parse_subject/1)
 
-        # Create records for all subjects
-        Enum.each(top_level_subjects, &Ash.create!(__MODULE__, &1))
+        data
+        |> Enum.map(&Store.parse_subject/1)
+        |> Ash.bulk_create!(__MODULE__, :create,
+          upsert_fields: [:description, :children, :tables],
+          return_errors?: true
+        )
 
-        changeset
-      end)
+        :ok
+      end
     end
   end
 
   attributes do
     # Primary identifier - using string as per API docs
-    attribute(:id, :integer, primary_key?: true, allow_nil?: false)
-    attribute(:description, :string, allow_nil?: false)
-    attribute(:active, :boolean, default: true)
-    attribute(:has_subjects, :boolean, default: false)
+    attribute :id, :integer, primary_key?: true, allow_nil?: false
+    attribute :description, :string, allow_nil?: false
+    attribute :active, :boolean, default: true
+    attribute :has_subjects, :boolean, default: false
   end
 
   relationships do
     belongs_to :parent, __MODULE__ do
-      attribute_type(:integer)
-      attribute_writable?(true)
-      allow_nil?(true)
-      source_attribute(:parent_id)
+      attribute_type :integer
+      attribute_writable? true
+      allow_nil? true
+      source_attribute :parent_id
     end
 
     has_many :children, __MODULE__ do
-      destination_attribute(:parent_id)
-      relationship_context(%{on_delete: :delete})
+      destination_attribute :parent_id
     end
 
     has_many :tables, Dst.Table do
-      destination_attribute(:subject_id)
-      relationship_context(%{on_delete: :delete})
+      destination_attribute :subject_id
     end
+  end
+
+  identities do
+    identity :id, :id
   end
 end
