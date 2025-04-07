@@ -4,6 +4,7 @@
     :ash_authentication_phoenix,
     :ash_authentication,
     :ash_sqlite,
+    :ash,
     :ecto,
     :ecto_sql,
     :phoenix
