@@ -1,4 +1,4 @@
-defmodule Dbk.Repo.Migrations.AddSubjectAndTable do
+defmodule Dbk.Repo.Migrations.Init do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 
@@ -8,6 +8,23 @@ defmodule Dbk.Repo.Migrations.AddSubjectAndTable do
   use Ecto.Migration
 
   def up do
+    create table(:users, primary_key: false) do
+      add :email, :citext, null: false
+      add :id, :uuid, null: false, primary_key: true
+    end
+
+    create unique_index(:users, [:email], name: "users_unique_email_index")
+
+    create table(:tokens, primary_key: false) do
+      add :updated_at, :utc_datetime_usec, null: false
+      add :created_at, :utc_datetime_usec, null: false
+      add :extra_data, :map
+      add :purpose, :text, null: false
+      add :expires_at, :utc_datetime, null: false
+      add :subject, :text, null: false
+      add :jti, :text, null: false, primary_key: true
+    end
+
     create table(:tables, primary_key: false) do
       add :subject_id,
           references(:subjects,
@@ -17,7 +34,7 @@ defmodule Dbk.Repo.Migrations.AddSubjectAndTable do
             on_delete: :delete_all
           )
 
-      add :variables, :bigint
+      add :variables, {:array, :text}
       add :active, :boolean, null: false
       add :latest_period, :text
       add :first_period, :text
@@ -55,5 +72,11 @@ defmodule Dbk.Repo.Migrations.AddSubjectAndTable do
     drop constraint(:tables, "tables_subject_id_fkey")
 
     drop table(:tables)
+
+    drop table(:tokens)
+
+    drop_if_exists unique_index(:users, [:email], name: "users_unique_email_index")
+
+    drop table(:users)
   end
 end

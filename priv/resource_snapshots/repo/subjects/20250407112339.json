@@ -48,11 +48,11 @@
       "references": {
         "name": "subjects_parent_id_fkey",
         "table": "subjects",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
+        "on_delete": "delete",
         "on_update": null,
         "deferrable": false,
+        "primary_key?": true,
         "multitenancy": {
           "global": null,
           "attribute": null,
@@ -67,7 +67,7 @@
     }
   ],
   "table": "subjects",
-  "hash": "0639EACA0EA9A0FC3AE8A208A91CBE77AC5C071171D0F83F3FA0C03617DE3DD4",
+  "hash": "F48E7C036EF409A85A790914AD3C7B26D77ADB6069477389D62CCD42E8434099",
   "identities": [
     {
       "name": "id",

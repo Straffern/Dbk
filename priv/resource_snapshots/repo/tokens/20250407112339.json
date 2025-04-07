@@ -6,8 +6,8 @@
       "type": "text",
       "source": "jti",
       "references": null,
-      "primary_key?": true,
       "allow_nil?": false,
+      "primary_key?": true,
       "generated?": false
     },
     {
@@ -16,8 +16,8 @@
       "type": "text",
       "source": "subject",
       "references": null,
-      "primary_key?": false,
       "allow_nil?": false,
+      "primary_key?": false,
       "generated?": false
     },
     {
@@ -26,8 +26,8 @@
       "type": "utc_datetime",
       "source": "expires_at",
       "references": null,
-      "primary_key?": false,
       "allow_nil?": false,
+      "primary_key?": false,
       "generated?": false
     },
     {
@@ -36,8 +36,8 @@
       "type": "text",
       "source": "purpose",
       "references": null,
-      "primary_key?": false,
       "allow_nil?": false,
+      "primary_key?": false,
       "generated?": false
     },
     {
@@ -46,8 +46,8 @@
       "type": "map",
       "source": "extra_data",
       "references": null,
-      "primary_key?": false,
       "allow_nil?": true,
+      "primary_key?": false,
       "generated?": false
     },
     {
@@ -56,8 +56,8 @@
       "type": "utc_datetime_usec",
       "source": "created_at",
       "references": null,
-      "primary_key?": false,
       "allow_nil?": false,
+      "primary_key?": false,
       "generated?": false
     },
     {
@@ -66,22 +66,22 @@
       "type": "utc_datetime_usec",
       "source": "updated_at",
       "references": null,
-      "primary_key?": false,
       "allow_nil?": false,
+      "primary_key?": false,
       "generated?": false
     }
   ],
   "table": "tokens",
-  "hash": "4C2CCC7C39F8C48E7313612948530828EC0DD85EF86A39E517C57C40B67072C9",
-  "repo": "Elixir.Dbk.Repo",
+  "hash": "0262544D56907BAEE1057ACCF0FBDF92396FEF39AED523F221F56EFD6B7963F5",
   "identities": [],
+  "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
-    "strategy": null,
-    "attribute": null
+    "attribute": null,
+    "strategy": null
   },
-  "base_filter": null,
-  "custom_indexes": [],
-  "custom_statements": [],
   "has_create_action": true
 }

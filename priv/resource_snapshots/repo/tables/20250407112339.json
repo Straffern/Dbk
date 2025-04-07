@@ -73,7 +73,10 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
+      "type": [
+        "array",
+        "text"
+      ],
       "source": "variables",
       "references": null,
       "allow_nil?": true,
@@ -88,11 +91,11 @@
       "references": {
         "name": "tables_subject_id_fkey",
         "table": "subjects",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
+        "on_delete": "delete",
         "on_update": null,
         "deferrable": false,
+        "primary_key?": true,
         "multitenancy": {
           "global": null,
           "attribute": null,
@@ -107,7 +110,7 @@
     }
   ],
   "table": "tables",
-  "hash": "CDC1FFC142924516B7CA6B8A4FFD52E77A1E3600D11E793A03A98646B7D8A38B",
+  "hash": "7CA316303E326D23E3DC036A5254464DCD10F5CEB3EE672CA08926B85E18B8B9",
   "identities": [],
   "repo": "Elixir.Dbk.Repo",
   "custom_indexes": [],

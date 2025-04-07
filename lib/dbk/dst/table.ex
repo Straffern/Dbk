@@ -15,7 +15,27 @@ defmodule Dbk.Dst.Table do
   end
 
   actions do
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :update, :destroy]
+
+    default_accept [
+      :id,
+      :text,
+      :unit,
+      :updated,
+      :first_period,
+      :latest_period,
+      :active,
+      :variables,
+      :subject_id
+    ]
+
+    create :create do
+      primary? true
+
+      upsert? true
+      upsert_identity :id
+      upsert_fields [:latest_period, :active, :variables]
+    end
   end
 
   attributes do
@@ -26,7 +46,7 @@ defmodule Dbk.Dst.Table do
     attribute :first_period, :string
     attribute :latest_period, :string
     attribute :active, :boolean, allow_nil?: false, default: true
-    attribute :variables, :integer, default: 0
+    attribute :variables, {:array, :string}
   end
 
   relationships do
@@ -35,6 +55,10 @@ defmodule Dbk.Dst.Table do
       attribute_writable? true
       allow_nil? true
     end
+  end
+
+  identities do
+    identity :id, :id
   end
 
   # calculations do

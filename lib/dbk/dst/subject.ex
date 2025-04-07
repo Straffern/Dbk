@@ -36,9 +36,10 @@ defmodule Dbk.Dst.Subject do
 
     action :refresh do
       argument :subjects, {:array, :string}, allow_nil?: true, description: "list of ids"
-      argument :include_tables, :boolean, allow_nil?: false, default: false
-      argument :recursive, :boolean, allow_nil?: false, default: false
-      argument :omit_inactive_subjects, :boolean, allow_nil?: false, default: false
+      argument :include_tables, :boolean, allow_nil?: false, default: true
+      argument :recursive, :boolean, allow_nil?: false, default: true
+      argument :omit_subjects_without_tables, :boolean, allow_nil?: false, default: true
+      argument :omit_inactive_subjects, :boolean, allow_nil?: false, default: true
 
       run fn input, _context ->
         # Build API params
@@ -47,7 +48,8 @@ defmodule Dbk.Dst.Subject do
             "subjects" => input.arguments[:subjects],
             "includeTables" => input.arguments[:include_tables],
             "recursive" => input.arguments[:recursive],
-            "omitInactiveSubjects" => input.arguments[:omit_inactive_subjects]
+            "omitInactiveSubjects" => input.arguments[:omit_inactive_subjects],
+            "omitSubjectsWithoutTables" => input.arguments[:omit_subjects_without_tables]
           }
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
           |> Map.new()
