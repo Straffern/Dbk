@@ -45,8 +45,7 @@ defmodule Dbk.Dst.StoreTest do
             "updated" => "2024-03-15T08:00:00",
             "firstPeriod" => "2007K1",
             "latestPeriod" => "2024K1",
-            "active" => true,
-            "variables" => 5
+            "active" => true
           }
         ]
       }
@@ -61,8 +60,7 @@ defmodule Dbk.Dst.StoreTest do
     "updated" => "2024-03-15T08:00:00",
     "firstPeriod" => "2007K1",
     "latestPeriod" => "2024K1",
-    "active" => true,
-    "variables" => 5
+    "active" => true
   }
 
   @table_info_response %{
@@ -156,7 +154,7 @@ defmodule Dbk.Dst.StoreTest do
         {:ok, %{status: 200, body: @table_info_response}}
       end)
 
-      assert {:ok, response} = Store.fetch_table_info()
+      assert {:ok, response} = Store.fetch_table_info(%{})
       assert response["id"] == "AKU100"
       assert response["text"] == "Arbejdskraftundersøgelsen"
       assert is_list(response["variables"])
@@ -219,7 +217,6 @@ defmodule Dbk.Dst.StoreTest do
       assert parsed.first_period == "2007K1"
       assert parsed.latest_period == "2024K1"
       assert parsed.active == true
-      assert parsed.variables == 5
       assert parsed.subject_id == "2"
     end
   end

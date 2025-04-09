@@ -3,7 +3,10 @@ defmodule Dbk.Dst.Table do
     domain: Dbk.Dst,
     data_layer: AshSqlite.DataLayer
 
+  import Ash.Changeset
+
   alias Dbk.Dst
+  alias Dbk.Dst.Store
 
   sqlite do
     table "tables"
@@ -25,7 +28,6 @@ defmodule Dbk.Dst.Table do
       :first_period,
       :latest_period,
       :active,
-      :variables,
       :subject_id
     ]
 
@@ -34,7 +36,19 @@ defmodule Dbk.Dst.Table do
 
       upsert? true
       upsert_identity :id
-      upsert_fields [:latest_period, :active, :variables]
+      upsert_fields [:latest_period, :active, :updated]
+
+      change fn changeset, _context ->
+        with {:ok, response} <- Store.fetch_table_info(%{"table" => changeset.attributes.id}),
+             metadata <- Store.parse_table_info(response) do
+          changeset
+          |> manage_relationship(:variables, metadata.variables,
+            on_no_match: :create,
+            on_match: :ignore,
+            on_missing: :create
+          )
+        end
+      end
     end
   end
 
@@ -46,7 +60,7 @@ defmodule Dbk.Dst.Table do
     attribute :first_period, :string
     attribute :latest_period, :string
     attribute :active, :boolean, allow_nil?: false, default: true
-    attribute :variables, {:array, :string}
+    # attribute :variables, {:array, :string}
   end
 
   relationships do
@@ -55,6 +69,8 @@ defmodule Dbk.Dst.Table do
       attribute_writable? true
       allow_nil? true
     end
+
+    many_to_many :variables, Dst.Variable, through: Dst.TableVariables
   end
 
   identities do

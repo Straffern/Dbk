@@ -7,6 +7,7 @@ let
 in {
   # https://devenv.sh/basics/
   env.GREET = "devenv";
+  env.ELIXIR_ERL_OPTIONS = "-kernel shell_history enabled";
 
   # https://devenv.sh/packages/
   packages = [ pkgs.git elixir pkgs.inotify-tools ];
