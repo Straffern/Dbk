@@ -43,9 +43,8 @@ defmodule Dbk.Dst.Table do
              metadata <- Store.parse_table_info(response) do
           changeset
           |> manage_relationship(:variables, metadata.variables,
-            on_no_match: :create,
-            on_match: :ignore,
-            on_missing: :create
+            type: :append,
+            use_identities: [:unique_variable]
           )
         end
       end

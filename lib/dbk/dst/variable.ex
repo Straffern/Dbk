@@ -13,6 +13,7 @@ defmodule Dbk.Dst.Variable do
   end
 
   actions do
+    default_accept [:variable_id, :text]
     defaults [:read, :update, :destroy]
 
     create :create do

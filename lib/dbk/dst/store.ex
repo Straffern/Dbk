@@ -182,7 +182,7 @@ defmodule Dbk.Dst.Store do
   defp parse_variables(variables) when is_list(variables) do
     Enum.map(variables, fn variable ->
       %{
-        id: variable["id"],
+        variable_id: variable["id"],
         text: variable["text"],
         elimination: variable["elimination"],
         time: variable["time"],
@@ -201,7 +201,7 @@ defmodule Dbk.Dst.Store do
   defp parse_variable_values(values) when is_list(values) do
     Enum.map(values, fn value ->
       %{
-        id: value["id"],
+        value_id: value["id"],
         text: value["text"]
       }
     end)
