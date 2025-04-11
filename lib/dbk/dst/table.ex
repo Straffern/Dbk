@@ -41,9 +41,12 @@ defmodule Dbk.Dst.Table do
       change fn changeset, _context ->
         with {:ok, response} <- Store.fetch_table_info(%{"table" => changeset.attributes.id}),
              metadata <- Store.parse_table_info(response) do
+          dbg(metadata)
+
           changeset
           |> manage_relationship(:variables, metadata.variables,
-            type: :append,
+            on_lookup: :relate,
+            on_no_match: :create,
             use_identities: [:unique_variable]
           )
         end
@@ -59,7 +62,6 @@ defmodule Dbk.Dst.Table do
     attribute :first_period, :string
     attribute :latest_period, :string
     attribute :active, :boolean, allow_nil?: false, default: true
-    # attribute :variables, {:array, :string}
   end
 
   relationships do
