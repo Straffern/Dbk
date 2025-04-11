@@ -1,4 +1,4 @@
-defmodule :"Elixir.Dbk.Repo.Migrations.Added variables, values and join table" do
+defmodule Dbk.Repo.Migrations.Init do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 
@@ -9,6 +9,9 @@ defmodule :"Elixir.Dbk.Repo.Migrations.Added variables, values and join table" d
 
   def up do
     create table(:variables, primary_key: false) do
+      add :time, :boolean
+      add :elimination, :boolean
+      add :order, :bigint
       add :text, :text
       add :variable_id, :text
       add :id, :uuid, null: false, primary_key: true
@@ -33,13 +36,40 @@ defmodule :"Elixir.Dbk.Repo.Migrations.Added variables, values and join table" d
 
     create unique_index(:values, [:value_id, :variable_id], name: "values_unique_value_index")
 
-    # alter table(:tables) do
-    # Attribute removal has been commented out to avoid data loss. See the migration generator documentation for more
-    # If you uncomment this, be sure to also uncomment the corresponding attribute *addition* in the `down` migration
-    # remove :variables
-    # end
-    # 
-    create unique_index(:tables, [:id], name: "tables_id_index")
+    create table(:users, primary_key: false) do
+      add :email, :citext, null: false
+      add :id, :uuid, null: false, primary_key: true
+    end
+
+    create unique_index(:users, [:email], name: "users_unique_email_index")
+
+    create table(:tokens, primary_key: false) do
+      add :updated_at, :utc_datetime_usec, null: false
+      add :created_at, :utc_datetime_usec, null: false
+      add :extra_data, :map
+      add :purpose, :text, null: false
+      add :expires_at, :utc_datetime, null: false
+      add :subject, :text, null: false
+      add :jti, :text, null: false, primary_key: true
+    end
+
+    create table(:tables, primary_key: false) do
+      add :subject_id,
+          references(:subjects,
+            column: :id,
+            name: "tables_subject_id_fkey",
+            type: :bigint,
+            on_delete: :delete_all
+          )
+
+      add :active, :boolean, null: false
+      add :latest_period, :text
+      add :first_period, :text
+      add :updated, :utc_datetime
+      add :unit, :text
+      add :text, :text, null: false
+      add :id, :text, null: false, primary_key: true
+    end
 
     create table(:table_variables, primary_key: false) do
       add :variable_id,
@@ -62,18 +92,42 @@ defmodule :"Elixir.Dbk.Repo.Migrations.Added variables, values and join table" d
           primary_key: true,
           null: false
 
-      add :time, :boolean
-      add :elimination, :boolean
-      add :order, :bigint
       add :id, :uuid, null: false, primary_key: true
     end
 
     create unique_index(:table_variables, [:table_id, :variable_id],
              name: "table_variables_unique_table_variable_index"
            )
+
+    create table(:subjects, primary_key: false) do
+      add :parent_id,
+          references(:subjects,
+            column: :id,
+            name: "subjects_parent_id_fkey",
+            type: :bigint,
+            on_delete: :delete_all
+          )
+
+      add :has_subjects, :boolean
+      add :active, :boolean
+      add :description, :text, null: false
+      add :id, :bigint, null: false, primary_key: true
+    end
+
+    create unique_index(:tables, [:id], name: "tables_id_index")
+
+    create unique_index(:subjects, [:id], name: "subjects_id_index")
   end
 
   def down do
+    drop_if_exists unique_index(:subjects, [:id], name: "subjects_id_index")
+
+    drop_if_exists unique_index(:tables, [:id], name: "tables_id_index")
+
+    drop constraint(:subjects, "subjects_parent_id_fkey")
+
+    drop table(:subjects)
+
     drop_if_exists unique_index(:table_variables, [:table_id, :variable_id],
                      name: "table_variables_unique_table_variable_index"
                    )
@@ -84,17 +138,16 @@ defmodule :"Elixir.Dbk.Repo.Migrations.Added variables, values and join table" d
 
     drop table(:table_variables)
 
-    drop_if_exists unique_index(:tables, [:id], name: "tables_id_index")
+    drop constraint(:tables, "tables_subject_id_fkey")
 
-    # alter table(:tables) do
-    # This is the `down` migration of the statement:
-    #
-    #     remove :variables
-    #
-    # 
-    # add :variables, {:array, :text}
-    # end
-    # 
+    drop table(:tables)
+
+    drop table(:tokens)
+
+    drop_if_exists unique_index(:users, [:email], name: "users_unique_email_index")
+
+    drop table(:users)
+
     drop_if_exists unique_index(:values, [:value_id, :variable_id],
                      name: "values_unique_value_index"
                    )

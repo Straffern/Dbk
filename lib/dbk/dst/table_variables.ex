@@ -18,16 +18,12 @@ defmodule Dbk.Dst.TableVariables do
   end
 
   actions do
-    default_accept [:table_id, :variable_id, :order, :elimination, :time]
+    default_accept [:table_id, :variable_id]
     defaults [:create, :read, :update, :destroy]
   end
 
   attributes do
     uuid_primary_key :id
-
-    attribute :order, :integer
-    attribute :elimination, :boolean
-    attribute :time, :boolean
   end
 
   relationships do

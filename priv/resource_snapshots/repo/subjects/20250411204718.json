@@ -7,8 +7,8 @@
       "source": "id",
       "references": null,
       "allow_nil?": false,
-      "primary_key?": true,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": true
     },
     {
       "default": "nil",
@@ -17,8 +17,8 @@
       "source": "description",
       "references": null,
       "allow_nil?": false,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": false
     },
     {
       "default": "nil",
@@ -27,8 +27,8 @@
       "source": "active",
       "references": null,
       "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": false
     },
     {
       "default": "nil",
@@ -37,8 +37,8 @@
       "source": "has_subjects",
       "references": null,
       "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": false
     },
     {
       "default": "nil",
@@ -49,25 +49,25 @@
         "name": "subjects_parent_id_fkey",
         "table": "subjects",
         "destination_attribute": "id",
+        "multitenancy": {
+          "global": null,
+          "strategy": null,
+          "attribute": null
+        },
+        "primary_key?": true,
         "on_delete": "delete",
         "on_update": null,
         "deferrable": false,
-        "primary_key?": true,
-        "multitenancy": {
-          "global": null,
-          "attribute": null,
-          "strategy": null
-        },
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
       "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": false
     }
   ],
   "table": "subjects",
-  "hash": "F48E7C036EF409A85A790914AD3C7B26D77ADB6069477389D62CCD42E8434099",
+  "hash": "F3E0E3F75922B6F15F9041F91F6FCF99FB7455D4C92D9725B44B2B1A4C2A7D7F",
   "identities": [
     {
       "name": "id",
@@ -79,13 +79,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "multitenancy": {
+    "global": null,
+    "strategy": null,
+    "attribute": null
+  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
-  "multitenancy": {
-    "global": null,
-    "attribute": null,
-    "strategy": null
-  },
   "has_create_action": true
 }

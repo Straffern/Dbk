@@ -13,7 +13,7 @@ defmodule Dbk.Dst.Variable do
   end
 
   actions do
-    default_accept [:variable_id, :text]
+    default_accept [:variable_id, :text, :order, :elimination, :time]
     defaults [:read, :update, :destroy]
 
     create :create do
@@ -28,6 +28,10 @@ defmodule Dbk.Dst.Variable do
     uuid_primary_key :id
     attribute :variable_id, :string
     attribute :text, :string
+
+    attribute :order, :integer
+    attribute :elimination, :boolean
+    attribute :time, :boolean
   end
 
   relationships do

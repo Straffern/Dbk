@@ -7,8 +7,8 @@
       "source": "id",
       "references": null,
       "allow_nil?": false,
-      "primary_key?": true,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": true
     },
     {
       "default": "nil",
@@ -17,8 +17,8 @@
       "source": "value_id",
       "references": null,
       "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": false
     },
     {
       "default": "nil",
@@ -27,8 +27,8 @@
       "source": "text",
       "references": null,
       "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": false
     },
     {
       "default": "nil",
@@ -38,26 +38,26 @@
       "references": {
         "name": "values_variable_id_fkey",
         "table": "variables",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "multitenancy": {
           "global": null,
-          "attribute": null,
-          "strategy": null
+          "strategy": null,
+          "attribute": null
         },
+        "primary_key?": true,
+        "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
       "allow_nil?": false,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": false
     }
   ],
   "table": "values",
-  "hash": "DEC2FEB8618BDD5D1936AF6EDECDCEB21E4506DE350EE70445E52FF12D1EBB34",
+  "hash": "FA5D2281D0AD38B05E723F2CCB5813A089208485F612182BEFD82AAE4AE7DD87",
   "identities": [
     {
       "name": "unique_value",
@@ -70,13 +70,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "multitenancy": {
+    "global": null,
+    "strategy": null,
+    "attribute": null
+  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
-  "multitenancy": {
-    "global": null,
-    "attribute": null,
-    "strategy": null
-  },
-  "has_create_action": false
+  "has_create_action": true
 }

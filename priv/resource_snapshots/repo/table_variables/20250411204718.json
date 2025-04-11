@@ -7,38 +7,8 @@
       "source": "id",
       "references": null,
       "allow_nil?": false,
-      "primary_key?": true,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "bigint",
-      "source": "order",
-      "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "boolean",
-      "source": "elimination",
-      "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "boolean",
-      "source": "time",
-      "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": true
     },
     {
       "default": "nil",
@@ -48,22 +18,22 @@
       "references": {
         "name": "table_variables_table_id_fkey",
         "table": "tables",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "multitenancy": {
           "global": null,
-          "attribute": null,
-          "strategy": null
+          "strategy": null,
+          "attribute": null
         },
+        "primary_key?": true,
+        "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
       "allow_nil?": false,
-      "primary_key?": true,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": true
     },
     {
       "default": "nil",
@@ -73,26 +43,26 @@
       "references": {
         "name": "table_variables_variable_id_fkey",
         "table": "variables",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "multitenancy": {
           "global": null,
-          "attribute": null,
-          "strategy": null
+          "strategy": null,
+          "attribute": null
         },
+        "primary_key?": true,
+        "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
       "allow_nil?": false,
-      "primary_key?": true,
-      "generated?": false
+      "generated?": false,
+      "primary_key?": true
     }
   ],
   "table": "table_variables",
-  "hash": "99D5393688584A4045ED4E9284438F6D8BCF9A528043C8EFCB61353340926F40",
+  "hash": "4D4FB351198C59EE59B8DA5BA9EAD0AE368DE3122AA303163CF1F451E94FDB30",
   "identities": [
     {
       "name": "unique_table_variable",
@@ -105,13 +75,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "multitenancy": {
+    "global": null,
+    "strategy": null,
+    "attribute": null
+  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
-  "multitenancy": {
-    "global": null,
-    "attribute": null,
-    "strategy": null
-  },
   "has_create_action": true
 }
