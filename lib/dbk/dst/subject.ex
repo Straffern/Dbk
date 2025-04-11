@@ -18,7 +18,7 @@ defmodule Dbk.Dst.Subject do
   end
 
   actions do
-    defaults [:read, :destroy]
+    defaults [:read, :update, :destroy]
     default_accept [:id, :description, :has_subjects, :parent_id, :active]
 
     create :create do
@@ -30,8 +30,15 @@ defmodule Dbk.Dst.Subject do
       upsert? true
       upsert_identity :id
 
-      change manage_relationship(:children, type: :create)
-      change manage_relationship(:tables, type: :create)
+      change manage_relationship(:children,
+               on_lookup: :relate,
+               on_no_match: :create
+             )
+
+      change manage_relationship(:tables,
+               on_lookup: :relate,
+               on_no_match: :create
+             )
     end
 
     action :refresh do
@@ -59,6 +66,7 @@ defmodule Dbk.Dst.Subject do
 
         data
         |> Enum.map(&Store.parse_subject/1)
+        |> Enum.take_random(5)
         |> Ash.bulk_create!(__MODULE__, :create,
           upsert_fields: [:description, :children, :tables],
           return_errors?: true
