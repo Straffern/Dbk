@@ -28,7 +28,8 @@ defmodule Dbk.Dst.Table do
       :first_period,
       :latest_period,
       :active,
-      :subject_id
+      :subject_id,
+      :variables
     ]
 
     create :create do
@@ -38,19 +39,7 @@ defmodule Dbk.Dst.Table do
       upsert_identity :id
       upsert_fields [:latest_period, :active, :updated]
 
-      change fn changeset, _context ->
-        with {:ok, response} <- Store.fetch_table_info(%{"table" => changeset.attributes.id}),
-             metadata <- Store.parse_table_info(response) do
-          dbg(metadata)
-
-          changeset
-          |> manage_relationship(:variables, metadata.variables,
-            on_lookup: :relate,
-            on_no_match: :create,
-            use_identities: [:unique_variable]
-          )
-        end
-      end
+      change manage_relationship(:variables, :create)
     end
   end
 

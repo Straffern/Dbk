@@ -40,41 +40,6 @@ defmodule Dbk.Dst.Subject do
                on_no_match: :create
              )
     end
-
-    action :refresh do
-      argument :subjects, {:array, :string}, allow_nil?: true, description: "list of ids"
-      argument :include_tables, :boolean, allow_nil?: false, default: true
-      argument :recursive, :boolean, allow_nil?: false, default: true
-      argument :omit_subjects_without_tables, :boolean, allow_nil?: false, default: true
-      argument :omit_inactive_subjects, :boolean, allow_nil?: false, default: true
-
-      run fn input, _context ->
-        # Build API params
-        params =
-          %{
-            "subjects" => input.arguments[:subjects],
-            "includeTables" => input.arguments[:include_tables],
-            "recursive" => input.arguments[:recursive],
-            "omitInactiveSubjects" => input.arguments[:omit_inactive_subjects],
-            "omitSubjectsWithoutTables" => input.arguments[:omit_subjects_without_tables]
-          }
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
-
-        # Fetch and parse data
-        {:ok, data} = Store.fetch_subjects(params)
-
-        data
-        |> Enum.map(&Store.parse_subject/1)
-        |> Enum.take_random(5)
-        |> Ash.bulk_create!(__MODULE__, :create,
-          upsert_fields: [:description, :children, :tables],
-          return_errors?: true
-        )
-
-        :ok
-      end
-    end
   end
 
   attributes do

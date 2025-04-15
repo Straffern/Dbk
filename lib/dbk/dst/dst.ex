@@ -1,9 +1,10 @@
 defmodule Dbk.Dst do
   use Ash.Domain
 
-  alias Dbk.Dst.{Subject, Table, Variable, Value, TableVariables}
+  alias Dbk.Dst.{Store, Subject, Table, Variable, Value, TableVariables}
 
   resources do
+    resource Store
     resource Subject
     resource Table
     resource Variable

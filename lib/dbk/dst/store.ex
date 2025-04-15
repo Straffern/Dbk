@@ -4,13 +4,29 @@ defmodule Dbk.Dst.Store do
 
   API Documentation: https://api.statbank.dk/
   """
+  use Ash.Resource,
+    domain: Dbk.Dst
 
   require Logger
+
+  alias Dbk.Dst
 
   # Get the HTTP client to use, defaulting to FinchClient in non-test environments
   @client Application.compile_env(:dbk, :http_client, Dbk.Http.FinchClient)
 
   @base_url "https://api.statbank.dk/v1"
+
+  actions do
+    action :refresh do
+      argument :subjects, {:array, :string}, allow_nil?: true, description: "list of ids"
+      argument :include_tables, :boolean, allow_nil?: false, default: true
+      argument :recursive, :boolean, allow_nil?: false, default: true
+      argument :omit_subjects_without_tables, :boolean, allow_nil?: false, default: true
+      argument :omit_inactive_subjects, :boolean, allow_nil?: false, default: true
+
+      run Dst.Refresh
+    end
+  end
 
   @doc """
   Fetches subjects from the DST API.
@@ -139,7 +155,8 @@ defmodule Dbk.Dst.Store do
       first_period: json["firstPeriod"],
       latest_period: json["latestPeriod"],
       active: json["active"],
-      subject_id: subject_id
+      subject_id: subject_id,
+      variables: json["variables"]
     }
   end
 

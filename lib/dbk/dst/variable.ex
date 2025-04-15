@@ -18,9 +18,20 @@ defmodule Dbk.Dst.Variable do
 
     create :create do
       primary? true
+      upsert? true
+      upsert_identity :unique_variable
 
       argument :values, {:array, :map}
-      manage_relationship(:values, type: :create)
+
+      change fn changeset, _context ->
+        changeset
+        |> Ash.Changeset.before_action(fn changeset ->
+          values =
+            changeset.arguments.values |> Ash.bulk_create!(Dst.Value, :create)
+
+          Ash.Changeset.manage_relationship(changeset, :values, values, type: :append)
+        end)
+      end
     end
   end
 

@@ -18,7 +18,13 @@ defmodule Dbk.Dst.Value do
 
   actions do
     default_accept [:value_id, :text, :variable_id]
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :update, :destroy]
+
+    create :create do
+      primary? true
+      upsert? true
+      upsert_fields [:text]
+    end
   end
 
   attributes do
