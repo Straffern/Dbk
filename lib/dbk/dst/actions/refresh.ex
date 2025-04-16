@@ -59,9 +59,10 @@ defmodule Dbk.Dst.Refresh do
       table_ids
       |> Task.async_stream(
         &fetch_table_info/1,
-        max_concurrency: 10,
         ordered: false,
-        on_timeout: :kill_task
+        max_concurrency: 10,
+        on_timeout: :kill_task,
+        timeout: 30_000
       )
       |> Enum.reduce([], &collect_table_info/2)
 
@@ -79,7 +80,7 @@ defmodule Dbk.Dst.Refresh do
   defp collect_table_info(_, acc), do: acc
 
   defp extract_unique_tables(parsed_data) do
-    Enum.flat_map(parsed_data, & &1.tables)
+    Enum.flat_map(parsed_data, &collect_tables_recursive/1)
     |> Enum.reduce({[], MapSet.new()}, fn map, {result, seen} ->
       if Enum.any?(map[:variables], fn var -> not MapSet.member?(seen, var) end) do
         new_seen = MapSet.union(seen, MapSet.new(map[:variables]))
@@ -88,7 +89,11 @@ defmodule Dbk.Dst.Refresh do
         {result, seen}
       end
     end)
-    |> elem(1)
+    |> elem(0)
+  end
+
+  defp collect_tables_recursive(%{tables: tables, children: children}) do
+    tables ++ Enum.flat_map(children, &collect_tables_recursive/1)
   end
 
   defp build_tables_with_variables(parsed_data, tables_info) do
@@ -109,16 +114,55 @@ defmodule Dbk.Dst.Refresh do
   end
 
   defp persist_data(tables_info, new_tables, parsed_data) do
+    enriched_subjects = enrich_subjects_with_variables(parsed_data, tables_info)
+
     with {:ok, _variables} <- create_variables(tables_info),
          {:ok, _tables} <- create_tables(new_tables),
-         {:ok, subjects} <- create_subjects(parsed_data) do
+         {:ok, subjects} <- create_subjects(enriched_subjects) do
       {:ok, subjects}
     end
   end
 
+  defp enrich_subjects_with_variables(subjects, tables_info) do
+    variable_lookup =
+      tables_info
+      |> Enum.flat_map(fn table ->
+        Enum.map(table.variables || [], fn var -> {var.text, var} end)
+      end)
+      |> Map.new()
+
+    Enum.map(subjects, fn subject ->
+      update_subject_tables_and_children(subject, variable_lookup)
+    end)
+  end
+
+  defp update_subject_tables_and_children(subject, variable_lookup) do
+    %{
+      subject
+      | tables: Enum.map(subject.tables, &update_table_variables_full(&1, variable_lookup)),
+        children:
+          Enum.map(subject.children, &update_subject_tables_and_children(&1, variable_lookup))
+    }
+  end
+
+  defp update_table_variables_full(table, variable_lookup) do
+    Map.update!(table, :variables, fn vars ->
+      Enum.map(vars, fn var_text ->
+        Map.get(variable_lookup, var_text, var_text)
+      end)
+    end)
+  end
+
   defp create_variables(tables_info) do
     try do
-      result = Ash.bulk_create!(tables_info, Variable, :create, upsert_fields: [:order])
+      result =
+        tables_info
+        |> Enum.flat_map(& &1.variables)
+        |> Ash.bulk_create!(Variable, :create,
+          upsert_fields: [:order],
+          return_errors?: true
+        )
+
       {:ok, result}
     rescue
       e -> {:error, e}

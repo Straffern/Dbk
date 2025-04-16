@@ -201,7 +201,7 @@ defmodule Dbk.Dst.Store do
         elimination: variable["elimination"],
         time: variable["time"],
         # May be nil
-        map: variable["map"],
+        # map: variable["map"],
         values: parse_variable_values(variable["values"])
       }
     end)

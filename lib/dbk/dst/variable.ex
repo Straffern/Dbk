@@ -25,11 +25,12 @@ defmodule Dbk.Dst.Variable do
 
       change fn changeset, _context ->
         changeset
-        |> Ash.Changeset.before_action(fn changeset ->
-          values =
-            changeset.arguments.values |> Ash.bulk_create!(Dst.Value, :create)
+        |> Ash.Changeset.after_transaction(fn changeset ->
+          changeset.arguments.values
+          |> Enum.map(&Map.put(&1, :variable_id, changeset.attributes.variable_id))
+          |> Ash.bulk_create!(Value, :create, return_errors?: true)
 
-          Ash.Changeset.manage_relationship(changeset, :values, values, type: :append)
+          # Ash.Changeset.manage_relationship(changeset, :values, values, type: :append)
         end)
       end
     end
@@ -46,7 +47,7 @@ defmodule Dbk.Dst.Variable do
   end
 
   relationships do
-    has_many :values, Value
+    has_many :values, Value, source_attribute: :variable_id
   end
 
   identities do

@@ -24,6 +24,7 @@ defmodule Dbk.Dst.Value do
       primary? true
       upsert? true
       upsert_fields [:text]
+      upsert_identity :unique_value
     end
   end
 
@@ -35,7 +36,9 @@ defmodule Dbk.Dst.Value do
   end
 
   relationships do
-    belongs_to :variable, Variable, allow_nil?: false
+    belongs_to :variable, Variable,
+      allow_nil?: false,
+      attribute_type: :string
   end
 
   identities do
