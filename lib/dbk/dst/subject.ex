@@ -6,7 +6,6 @@ defmodule Dbk.Dst.Subject do
   require Ash.Query
 
   alias Dbk.Dst
-  alias Dbk.Dst.Store
 
   sqlite do
     table "subjects"

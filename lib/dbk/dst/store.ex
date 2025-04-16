@@ -19,9 +19,6 @@ defmodule Dbk.Dst.Store do
   actions do
     action :refresh do
       argument :subjects, {:array, :string}, allow_nil?: true, description: "list of ids"
-      argument :include_tables, :boolean, allow_nil?: false, default: true
-      argument :recursive, :boolean, allow_nil?: false, default: true
-      argument :omit_subjects_without_tables, :boolean, allow_nil?: false, default: true
       argument :omit_inactive_subjects, :boolean, allow_nil?: false, default: true
 
       run Dst.Refresh

@@ -3,10 +3,7 @@ defmodule Dbk.Dst.Table do
     domain: Dbk.Dst,
     data_layer: AshSqlite.DataLayer
 
-  import Ash.Changeset
-
   alias Dbk.Dst
-  alias Dbk.Dst.Store
 
   sqlite do
     table "tables"
@@ -28,8 +25,7 @@ defmodule Dbk.Dst.Table do
       :first_period,
       :latest_period,
       :active,
-      :subject_id,
-      :variables
+      :subject_id
     ]
 
     create :create do
@@ -39,7 +35,9 @@ defmodule Dbk.Dst.Table do
       upsert_identity :id
       upsert_fields [:latest_period, :active, :updated]
 
-      change manage_relationship(:variables, :create)
+      argument :variables, {:array, :map}
+
+      change manage_relationship(:variables, type: :create)
     end
   end
 
