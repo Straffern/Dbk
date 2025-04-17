@@ -24,7 +24,7 @@ defmodule Dbk.Repo.Migrations.Init do
           references(:variables,
             column: :id,
             name: "values_variable_id_fkey",
-            type: :uuid,
+            type: :text,
             on_delete: :delete_all
           ),
           null: false

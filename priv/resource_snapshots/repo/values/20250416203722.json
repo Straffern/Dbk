@@ -7,8 +7,8 @@
       "source": "id",
       "references": null,
       "allow_nil?": false,
-      "generated?": false,
-      "primary_key?": true
+      "primary_key?": true,
+      "generated?": false
     },
     {
       "default": "nil",
@@ -17,8 +17,8 @@
       "source": "value_id",
       "references": null,
       "allow_nil?": true,
-      "generated?": false,
-      "primary_key?": false
+      "primary_key?": false,
+      "generated?": false
     },
     {
       "default": "nil",
@@ -27,37 +27,37 @@
       "source": "text",
       "references": null,
       "allow_nil?": true,
-      "generated?": false,
-      "primary_key?": false
+      "primary_key?": false,
+      "generated?": false
     },
     {
       "default": "nil",
       "size": null,
-      "type": "uuid",
+      "type": "text",
       "source": "variable_id",
       "references": {
         "name": "values_variable_id_fkey",
         "table": "variables",
+        "on_delete": "delete",
+        "primary_key?": true,
         "destination_attribute": "id",
+        "on_update": null,
+        "deferrable": false,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
-        "primary_key?": true,
-        "on_delete": "delete",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
       "allow_nil?": false,
-      "generated?": false,
-      "primary_key?": false
+      "primary_key?": false,
+      "generated?": false
     }
   ],
   "table": "values",
-  "hash": "FA5D2281D0AD38B05E723F2CCB5813A089208485F612182BEFD82AAE4AE7DD87",
+  "hash": "2AECE85C25C47B142996A7D12A405D86CD3606760176DCA351A7BF8610283EC0",
   "identities": [
     {
       "name": "unique_value",
@@ -70,13 +70,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

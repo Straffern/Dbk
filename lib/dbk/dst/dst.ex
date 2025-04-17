@@ -4,7 +4,7 @@ defmodule Dbk.Dst do
   alias Dbk.Dst.{Store, Subject, Table, Variable, Value, TableVariables}
 
   resources do
-    resource Store, do: define(:refresh_store, action: :refresh)
+    resource Store, do: define(:refresh_store, action: :refresh, args: [:subjects])
 
     resource Subject
     resource Table

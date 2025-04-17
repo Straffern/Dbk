@@ -7,8 +7,8 @@
       "source": "id",
       "references": null,
       "allow_nil?": false,
-      "generated?": false,
-      "primary_key?": true
+      "primary_key?": true,
+      "generated?": false
     },
     {
       "default": "nil",
@@ -17,12 +17,12 @@
       "source": "email",
       "references": null,
       "allow_nil?": false,
-      "generated?": false,
-      "primary_key?": false
+      "primary_key?": false,
+      "generated?": false
     }
   ],
   "table": "users",
-  "hash": "8677D17CD69A348B65763ADA1D522A49F52A702E53C22D948A5EF44D5F710AB5",
+  "hash": "77AE9A60B62E0831821391A514A3563592CF9D727AE936C899138495B0E9BE1B",
   "identities": [
     {
       "name": "unique_email",
@@ -34,13 +34,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

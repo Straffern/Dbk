@@ -3,12 +3,12 @@
     let
       version = "1.4.1";
 system = "x86_64-linux";
-devenv_root = "/home/alex/Documents/dbk";
+devenv_root = "/home/alex/personal/projects/Dbk";
 devenv_dotfile = ./.devenv;
 devenv_dotfile_string = ".devenv";
 container_name = null;
 devenv_tmpdir = "/run/user/1000";
-devenv_runtime = "/run/user/1000/devenv-6116e5b";
+devenv_runtime = "/run/user/1000/devenv-b68edb7";
 devenv_istesting = false;
 devenv_direnvrc_latest_version = 1;
 
@@ -26,12 +26,12 @@ devenv_direnvrc_latest_version = 1;
         let
           version = "1.4.1";
 system = "x86_64-linux";
-devenv_root = "/home/alex/Documents/dbk";
+devenv_root = "/home/alex/personal/projects/Dbk";
 devenv_dotfile = ./.devenv;
 devenv_dotfile_string = ".devenv";
 container_name = null;
 devenv_tmpdir = "/run/user/1000";
-devenv_runtime = "/run/user/1000/devenv-6116e5b";
+devenv_runtime = "/run/user/1000/devenv-b68edb7";
 devenv_istesting = false;
 devenv_direnvrc_latest_version = 1;
 

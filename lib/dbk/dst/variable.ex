@@ -25,7 +25,7 @@ defmodule Dbk.Dst.Variable do
 
       change fn changeset, _context ->
         changeset
-        |> Ash.Changeset.after_transaction(fn changeset ->
+        |> Ash.Changeset.after_action(fn changeset, _ ->
           changeset.arguments.values
           |> Enum.map(&Map.put(&1, :variable_id, changeset.attributes.variable_id))
           |> Ash.bulk_create!(Value, :create, return_errors?: true)
