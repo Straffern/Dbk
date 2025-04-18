@@ -78,16 +78,16 @@
       "references": {
         "name": "tables_subject_id_fkey",
         "table": "subjects",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
+        "primary_key?": true,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
+        "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
@@ -97,7 +97,7 @@
     }
   ],
   "table": "tables",
-  "hash": "37527EDE5388DE38E6A631E7DACF147F17A9EE7580D0E30BE52AC1A75A368607",
+  "hash": "627B80EAB66C29B5A0A2D79E51615271955B27EB5DA260B0A3A76A37FFA68DF1",
   "identities": [
     {
       "name": "id",
@@ -109,13 +109,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "has_create_action": true
 }

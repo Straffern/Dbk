@@ -22,7 +22,7 @@ defmodule Dbk.Repo.Migrations.Init do
     create table(:values, primary_key: false) do
       add :variable_id,
           references(:variables,
-            column: :id,
+            column: :variable_id,
             name: "values_variable_id_fkey",
             type: :text,
             on_delete: :delete_all

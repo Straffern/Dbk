@@ -22,7 +22,7 @@
     }
   ],
   "table": "users",
-  "hash": "77AE9A60B62E0831821391A514A3563592CF9D727AE936C899138495B0E9BE1B",
+  "hash": "07D4B7A9D403EE5700D1110817481BDA83A825BD9683EE6C46AC33B71E38F2DC",
   "identities": [
     {
       "name": "unique_email",
@@ -34,13 +34,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "has_create_action": true
 }

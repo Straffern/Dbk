@@ -72,16 +72,16 @@
     }
   ],
   "table": "tokens",
-  "hash": "0174E2863DAFCA87D00F38448D5E4D2B3A34BB9CB6279F6718A6FB9ABE5CD15D",
+  "hash": "C7596733D3B6265BA3A281692659B82BA7FF48796BFE1827748E0FBBA10942FA",
   "identities": [],
   "repo": "Elixir.Dbk.Repo",
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "has_create_action": true
 }

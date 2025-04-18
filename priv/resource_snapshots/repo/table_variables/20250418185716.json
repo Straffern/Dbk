@@ -18,16 +18,16 @@
       "references": {
         "name": "table_variables_table_id_fkey",
         "table": "tables",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
+        "primary_key?": true,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
+        "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
@@ -43,16 +43,16 @@
       "references": {
         "name": "table_variables_variable_id_fkey",
         "table": "variables",
-        "on_delete": "delete",
-        "primary_key?": true,
         "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
+        "primary_key?": true,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
+        "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
@@ -62,7 +62,7 @@
     }
   ],
   "table": "table_variables",
-  "hash": "246C938404A35774F7116F7CDF31A2ED03CF23100196A7688655110E17F21DFC",
+  "hash": "94A3FB62F9E94D7BFD774B61DCEE219F2576156EFC64B728120C1E438583B718",
   "identities": [
     {
       "name": "unique_table_variable",
@@ -75,13 +75,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "has_create_action": true
 }

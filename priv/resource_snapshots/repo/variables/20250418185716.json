@@ -3,7 +3,7 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
+      "type": "uuid",
       "source": "id",
       "references": null,
       "allow_nil?": false,
@@ -14,17 +14,7 @@
       "default": "nil",
       "size": null,
       "type": "text",
-      "source": "description",
-      "references": null,
-      "allow_nil?": false,
-      "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "boolean",
-      "source": "active",
+      "source": "variable_id",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
@@ -33,8 +23,8 @@
     {
       "default": "nil",
       "size": null,
-      "type": "boolean",
-      "source": "has_subjects",
+      "type": "text",
+      "source": "text",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
@@ -44,48 +34,53 @@
       "default": "nil",
       "size": null,
       "type": "bigint",
-      "source": "parent_id",
-      "references": {
-        "name": "subjects_parent_id_fkey",
-        "table": "subjects",
-        "on_delete": "delete",
-        "primary_key?": true,
-        "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
-        "multitenancy": {
-          "global": null,
-          "strategy": null,
-          "attribute": null
-        },
-        "destination_attribute_default": null,
-        "destination_attribute_generated": null
-      },
+      "source": "order",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "boolean",
+      "source": "elimination",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "boolean",
+      "source": "time",
+      "references": null,
       "allow_nil?": true,
       "primary_key?": false,
       "generated?": false
     }
   ],
-  "table": "subjects",
-  "hash": "C60A76976EE261E6C819E90FAD89006F5CDE8BC58E9A9D274ECDFAF42CF72583",
+  "table": "variables",
+  "hash": "6D4AF1C73B2BB65CD894B257E3019044E848DC71700CABFA2DC72D1EBD52E8AC",
   "identities": [
     {
-      "name": "id",
+      "name": "unique_variable",
       "keys": [
-        "id"
+        "variable_id"
       ],
       "base_filter": null,
-      "index_name": "subjects_id_index"
+      "index_name": "variables_unique_variable_index"
     }
   ],
   "repo": "Elixir.Dbk.Repo",
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "has_create_action": true
 }

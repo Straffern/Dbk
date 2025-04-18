@@ -5,6 +5,7 @@ defmodule Dbk.Dst.Variable do
 
   require Ash.Query
 
+  require Ash.Resource.Change.Builtins
   alias Dbk.Dst.Value
 
   sqlite do
@@ -13,32 +14,32 @@ defmodule Dbk.Dst.Variable do
   end
 
   actions do
-    default_accept [:variable_id, :text, :order, :elimination, :time]
+    default_accept [:id, :text, :order, :elimination, :time]
     defaults [:read, :update, :destroy]
 
     create :create do
       primary? true
       upsert? true
-      upsert_identity :unique_variable
 
       argument :values, {:array, :map}
 
-      change fn changeset, _context ->
-        changeset
-        |> Ash.Changeset.after_action(fn changeset, _ ->
-          changeset.arguments.values
-          |> Enum.map(&Map.put(&1, :variable_id, changeset.attributes.variable_id))
-          |> Ash.bulk_create!(Value, :create, return_errors?: true)
-
-          # Ash.Changeset.manage_relationship(changeset, :values, values, type: :append)
-        end)
-      end
+      change after_action(fn
+               changeset, record, context ->
+                 with values <- changeset.arguments.values,
+                      values_with_variable_id <-
+                        Enum.map(values, &Map.put(&1, :variable_id, record.variable_id)),
+                      _bulk_create <-
+                        Ash.bulk_create(values_with_variable_id, Value, :create,
+                          return_errors?: true
+                        ) do
+                   {:ok, record}
+                 end
+             end)
     end
   end
 
   attributes do
-    uuid_primary_key :id
-    attribute :variable_id, :string
+    attribute :id, :string, primary_key?: true
     attribute :text, :string
 
     attribute :order, :integer
@@ -47,7 +48,7 @@ defmodule Dbk.Dst.Variable do
   end
 
   relationships do
-    has_many :values, Value, source_attribute: :variable_id
+    has_many :values, Value, source_attribute: :variable_id, destination_attribute: :variable_id
   end
 
   identities do
