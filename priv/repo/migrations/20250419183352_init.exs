@@ -13,16 +13,13 @@ defmodule Dbk.Repo.Migrations.Init do
       add :elimination, :boolean
       add :order, :bigint
       add :text, :text
-      add :variable_id, :text
-      add :id, :uuid, null: false, primary_key: true
+      add :id, :text, null: false, primary_key: true
     end
-
-    create unique_index(:variables, [:variable_id], name: "variables_unique_variable_index")
 
     create table(:values, primary_key: false) do
       add :variable_id,
           references(:variables,
-            column: :variable_id,
+            column: :id,
             name: "values_variable_id_fkey",
             type: :text,
             on_delete: :delete_all
@@ -76,7 +73,7 @@ defmodule Dbk.Repo.Migrations.Init do
           references(:variables,
             column: :id,
             name: "table_variables_variable_id_fkey",
-            type: :uuid,
+            type: :text,
             on_delete: :delete_all
           ),
           primary_key: true,
@@ -113,17 +110,9 @@ defmodule Dbk.Repo.Migrations.Init do
       add :description, :text, null: false
       add :id, :bigint, null: false, primary_key: true
     end
-
-    create unique_index(:tables, [:id], name: "tables_id_index")
-
-    create unique_index(:subjects, [:id], name: "subjects_id_index")
   end
 
   def down do
-    drop_if_exists unique_index(:subjects, [:id], name: "subjects_id_index")
-
-    drop_if_exists unique_index(:tables, [:id], name: "tables_id_index")
-
     drop constraint(:subjects, "subjects_parent_id_fkey")
 
     drop table(:subjects)
@@ -155,10 +144,6 @@ defmodule Dbk.Repo.Migrations.Init do
     drop constraint(:values, "values_variable_id_fkey")
 
     drop table(:values)
-
-    drop_if_exists unique_index(:variables, [:variable_id],
-                     name: "variables_unique_variable_index"
-                   )
 
     drop table(:variables)
   end

@@ -6,6 +6,7 @@ defmodule Dbk.Dst.Refresh do
 
   use Ash.Resource.Actions.Implementation
 
+  require Logger
   alias Dbk.Dst.Store
   alias Dbk.Dst.{Subject, Table, Variable}
 
@@ -16,8 +17,11 @@ defmodule Dbk.Dst.Refresh do
     with {:ok, params} <- build_params(input),
          {:ok, parsed_data} <- fetch_subjects(params),
          {:ok, tables_info} <- fetch_unique_tables_info(parsed_data),
-         {:ok, new_tables} <- build_tables_with_variables(parsed_data, tables_info) do
-      persist_data(tables_info, new_tables, parsed_data)
+         {:ok, new_tables} <- build_tables_with_variables(parsed_data, tables_info),
+         {:ok, _subjects, _tables, _variables} <-
+           persist_data(tables_info, new_tables, parsed_data) do
+      Logger.info("Refreshed subjects, tables and vairables")
+      :ok
     else
       {:error, reason} -> {:error, reason}
     end
@@ -116,10 +120,10 @@ defmodule Dbk.Dst.Refresh do
   defp persist_data(tables_info, new_tables, parsed_data) do
     enriched_subjects = enrich_subjects_with_variables(parsed_data, tables_info)
 
-    with {:ok, _variables} <- create_variables(tables_info),
-         {:ok, _tables} <- create_tables(new_tables),
+    with {:ok, variables} <- create_variables(tables_info),
+         {:ok, tables} <- create_tables(new_tables),
          {:ok, subjects} <- create_subjects(enriched_subjects) do
-      {:ok, subjects}
+      {:ok, subjects, tables, variables}
     end
   end
 
@@ -159,7 +163,7 @@ defmodule Dbk.Dst.Refresh do
         tables_info
         |> Enum.flat_map(& &1.variables)
         |> Ash.bulk_create!(Variable, :create,
-          upsert_fields: [:order],
+          upsert_fields: [:order, :values],
           return_errors?: true
         )
 
@@ -173,7 +177,7 @@ defmodule Dbk.Dst.Refresh do
     try do
       result =
         Ash.bulk_create!(new_tables, Table, :create,
-          upsert_fields: [:updated, :latest_period, :active]
+          upsert_fields: [:updated, :latest_period, :active, :variables]
         )
 
       {:ok, result}

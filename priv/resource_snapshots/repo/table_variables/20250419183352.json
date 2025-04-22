@@ -6,8 +6,8 @@
       "type": "uuid",
       "source": "id",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": true,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -18,51 +18,51 @@
       "references": {
         "name": "table_variables_table_id_fkey",
         "table": "tables",
-        "destination_attribute": "id",
+        "on_delete": "delete",
         "primary_key?": true,
+        "destination_attribute": "id",
+        "on_update": null,
+        "deferrable": false,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
-        "on_delete": "delete",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
-      "allow_nil?": false,
       "primary_key?": true,
+      "allow_nil?": false,
       "generated?": false
     },
     {
       "default": "nil",
       "size": null,
-      "type": "uuid",
+      "type": "text",
       "source": "variable_id",
       "references": {
         "name": "table_variables_variable_id_fkey",
         "table": "variables",
-        "destination_attribute": "id",
+        "on_delete": "delete",
         "primary_key?": true,
+        "destination_attribute": "id",
+        "on_update": null,
+        "deferrable": false,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
-        "on_delete": "delete",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
-      "allow_nil?": false,
       "primary_key?": true,
+      "allow_nil?": false,
       "generated?": false
     }
   ],
   "table": "table_variables",
-  "hash": "94A3FB62F9E94D7BFD774B61DCEE219F2576156EFC64B728120C1E438583B718",
+  "hash": "085F81993E68EEF20E98A6BEC88DA9F0E816E29FF568B850091DCD818C5CEFC0",
   "identities": [
     {
       "name": "unique_table_variable",
@@ -75,13 +75,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

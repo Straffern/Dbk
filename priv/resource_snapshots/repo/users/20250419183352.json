@@ -6,8 +6,8 @@
       "type": "uuid",
       "source": "id",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": true,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -16,13 +16,13 @@
       "type": "citext",
       "source": "email",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     }
   ],
   "table": "users",
-  "hash": "07D4B7A9D403EE5700D1110817481BDA83A825BD9683EE6C46AC33B71E38F2DC",
+  "hash": "B4B86474BC5B3E4D39A217040D883E07B02792DE609E873F1467A9741D9E4282",
   "identities": [
     {
       "name": "unique_email",
@@ -34,13 +34,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

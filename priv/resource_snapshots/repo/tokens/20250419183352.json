@@ -6,8 +6,8 @@
       "type": "text",
       "source": "jti",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": true,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -16,8 +16,8 @@
       "type": "text",
       "source": "subject",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -26,8 +26,8 @@
       "type": "utc_datetime",
       "source": "expires_at",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -36,8 +36,8 @@
       "type": "text",
       "source": "purpose",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -46,8 +46,8 @@
       "type": "map",
       "source": "extra_data",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     },
     {
@@ -56,8 +56,8 @@
       "type": "utc_datetime_usec",
       "source": "created_at",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -66,22 +66,22 @@
       "type": "utc_datetime_usec",
       "source": "updated_at",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     }
   ],
   "table": "tokens",
-  "hash": "C7596733D3B6265BA3A281692659B82BA7FF48796BFE1827748E0FBBA10942FA",
+  "hash": "805CBBB8A64821FFA6A820FF6B0B7F3A6DC0AF4697AAE0677A8619CA553F92EA",
   "identities": [],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

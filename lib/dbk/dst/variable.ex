@@ -23,23 +23,12 @@ defmodule Dbk.Dst.Variable do
 
       argument :values, {:array, :map}
 
-      change after_action(fn
-               changeset, record, context ->
-                 with values <- changeset.arguments.values,
-                      values_with_variable_id <-
-                        Enum.map(values, &Map.put(&1, :variable_id, record.variable_id)),
-                      _bulk_create <-
-                        Ash.bulk_create(values_with_variable_id, Value, :create,
-                          return_errors?: true
-                        ) do
-                   {:ok, record}
-                 end
-             end)
+      change after_action(&create_variables/3)
     end
   end
 
   attributes do
-    attribute :id, :string, primary_key?: true
+    attribute :id, :string, primary_key?: true, allow_nil?: false
     attribute :text, :string
 
     attribute :order, :integer
@@ -48,10 +37,16 @@ defmodule Dbk.Dst.Variable do
   end
 
   relationships do
-    has_many :values, Value, source_attribute: :variable_id, destination_attribute: :variable_id
+    has_many :values, Value
   end
 
-  identities do
-    identity :unique_variable, :variable_id
+  defp create_variables(changeset, record, _context) do
+    with values <- changeset.arguments.values,
+         values_with_variable_id <-
+           Enum.map(values, &Map.put(&1, :variable_id, record.id)),
+         _bulk_create <-
+           Ash.bulk_create(values_with_variable_id, Value, :create, return_errors?: true) do
+      {:ok, record}
+    end
   end
 end

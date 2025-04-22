@@ -28,7 +28,7 @@ defmodule Dbk.Dst.TableVariables do
 
   relationships do
     belongs_to :table, Table, primary_key?: true, allow_nil?: false, attribute_type: :string
-    belongs_to :variable, Variable, primary_key?: true, allow_nil?: false
+    belongs_to :variable, Variable, primary_key?: true, allow_nil?: false, attribute_type: :string
   end
 
   identities do

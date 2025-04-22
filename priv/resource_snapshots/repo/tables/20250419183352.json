@@ -3,21 +3,61 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
+      "type": "text",
       "source": "id",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": true,
+      "allow_nil?": false,
       "generated?": false
     },
     {
       "default": "nil",
       "size": null,
       "type": "text",
-      "source": "description",
+      "source": "text",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "unit",
+      "references": null,
+      "primary_key?": false,
+      "allow_nil?": true,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "utc_datetime",
+      "source": "updated",
+      "references": null,
+      "primary_key?": false,
+      "allow_nil?": true,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "first_period",
+      "references": null,
+      "primary_key?": false,
+      "allow_nil?": true,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "latest_period",
+      "references": null,
+      "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     },
     {
@@ -26,66 +66,47 @@
       "type": "boolean",
       "source": "active",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "boolean",
-      "source": "has_subjects",
-      "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     },
     {
       "default": "nil",
       "size": null,
       "type": "bigint",
-      "source": "parent_id",
+      "source": "subject_id",
       "references": {
-        "name": "subjects_parent_id_fkey",
+        "name": "tables_subject_id_fkey",
         "table": "subjects",
-        "destination_attribute": "id",
+        "on_delete": "delete",
         "primary_key?": true,
+        "destination_attribute": "id",
+        "on_update": null,
+        "deferrable": false,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
-        "on_delete": "delete",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     }
   ],
-  "table": "subjects",
-  "hash": "78B34DED0514226414DE888C17568F1FCDFED64E93762BFA8F984B0EE0331FF3",
-  "identities": [
-    {
-      "name": "id",
-      "keys": [
-        "id"
-      ],
-      "base_filter": null,
-      "index_name": "subjects_id_index"
-    }
-  ],
+  "table": "tables",
+  "hash": "A9DB607FDC457030352BD69B824F67E40F427FA2BAFACB9B14B91FAA683B9BF1",
+  "identities": [],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

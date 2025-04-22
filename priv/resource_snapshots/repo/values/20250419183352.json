@@ -6,8 +6,8 @@
       "type": "uuid",
       "source": "id",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": true,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -16,8 +16,8 @@
       "type": "text",
       "source": "value_id",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     },
     {
@@ -26,8 +26,8 @@
       "type": "text",
       "source": "text",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     },
     {
@@ -38,26 +38,26 @@
       "references": {
         "name": "values_variable_id_fkey",
         "table": "variables",
-        "destination_attribute": "variable_id",
-        "primary_key?": false,
+        "on_delete": "delete",
+        "primary_key?": true,
+        "destination_attribute": "id",
+        "on_update": null,
+        "deferrable": false,
         "multitenancy": {
           "global": null,
           "strategy": null,
           "attribute": null
         },
-        "on_delete": "delete",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
-      "allow_nil?": false,
       "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     }
   ],
   "table": "values",
-  "hash": "F3CAA3CD834AD72677146F6A6131AF695B08A5841010192B9F4D15C5B9B62CBC",
+  "hash": "9458D5F43D8796095BFF771D99BD78D5AD26A2974688F181707684F7CA3140C9",
   "identities": [
     {
       "name": "unique_value",
@@ -70,13 +70,13 @@
     }
   ],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

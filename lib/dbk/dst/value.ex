@@ -38,9 +38,7 @@ defmodule Dbk.Dst.Value do
   relationships do
     belongs_to :variable, Variable,
       allow_nil?: false,
-      attribute_type: :string,
-      source_attribute: :variable_id,
-      destination_attribute: :variable_id
+      attribute_type: :string
   end
 
   identities do

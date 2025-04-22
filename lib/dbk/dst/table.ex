@@ -32,7 +32,6 @@ defmodule Dbk.Dst.Table do
       primary? true
 
       upsert? true
-      upsert_identity :id
       upsert_fields [:latest_period, :active, :updated]
 
       argument :variables, {:array, :map}
@@ -59,10 +58,6 @@ defmodule Dbk.Dst.Table do
     end
 
     many_to_many :variables, Dst.Variable, through: Dst.TableVariables
-  end
-
-  identities do
-    identity :id, :id
   end
 
   # calculations do

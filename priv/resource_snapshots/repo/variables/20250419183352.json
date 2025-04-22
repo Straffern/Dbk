@@ -3,21 +3,11 @@
     {
       "default": "nil",
       "size": null,
-      "type": "uuid",
+      "type": "text",
       "source": "id",
       "references": null,
-      "allow_nil?": false,
       "primary_key?": true,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "text",
-      "source": "variable_id",
-      "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
+      "allow_nil?": false,
       "generated?": false
     },
     {
@@ -26,8 +16,8 @@
       "type": "text",
       "source": "text",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     },
     {
@@ -36,8 +26,8 @@
       "type": "bigint",
       "source": "order",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     },
     {
@@ -46,8 +36,8 @@
       "type": "boolean",
       "source": "elimination",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     },
     {
@@ -56,31 +46,22 @@
       "type": "boolean",
       "source": "time",
       "references": null,
-      "allow_nil?": true,
       "primary_key?": false,
+      "allow_nil?": true,
       "generated?": false
     }
   ],
   "table": "variables",
-  "hash": "6D4AF1C73B2BB65CD894B257E3019044E848DC71700CABFA2DC72D1EBD52E8AC",
-  "identities": [
-    {
-      "name": "unique_variable",
-      "keys": [
-        "variable_id"
-      ],
-      "base_filter": null,
-      "index_name": "variables_unique_variable_index"
-    }
-  ],
+  "hash": "16D5DB9BB97B77DB3E3E29DE67F21E3A2218A6BA02BA8D9877CA37B9C21BB960",
+  "identities": [],
   "repo": "Elixir.Dbk.Repo",
+  "custom_indexes": [],
+  "base_filter": null,
+  "custom_statements": [],
   "multitenancy": {
     "global": null,
     "strategy": null,
     "attribute": null
   },
-  "custom_indexes": [],
-  "base_filter": null,
-  "custom_statements": [],
   "has_create_action": true
 }

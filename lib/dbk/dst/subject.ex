@@ -27,7 +27,6 @@ defmodule Dbk.Dst.Subject do
       argument :tables, {:array, :map}
 
       upsert? true
-      upsert_identity :id
 
       change manage_relationship(:children,
                on_lookup: :relate,
@@ -64,9 +63,5 @@ defmodule Dbk.Dst.Subject do
     has_many :tables, Dst.Table do
       destination_attribute :subject_id
     end
-  end
-
-  identities do
-    identity :id, :id
   end
 end
