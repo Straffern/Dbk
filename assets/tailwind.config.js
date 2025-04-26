@@ -9,8 +9,8 @@ module.exports = {
   content: [
     "../deps/ash_authentication_phoenix/**/*.*ex",
     "./js/**/*.js",
-    "../lib/dbk_web.ex",
-    "../lib/dbk_web/**/*.*ex"
+    "../lib/numeri_web.ex",
+    "../lib/numeri_web/**/*.*ex"
   ],
   theme: {
     extend: {

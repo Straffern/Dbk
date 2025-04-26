@@ -22,12 +22,24 @@ in {
   # services.postgres.enable = true;
 
   # https://devenv.sh/scripts/
+  scripts.cleanup.exec = ''
+    echo "Cleaning up development artifacts..."
+    # Remove migration files (contents only)
+    rm -rf priv/repo/migrations/*
+    # Remove resource snapshots directory
+    rm -rf priv/resource_snapshots
+    # Remove development database files
+    rm -f numeri_dev.db numeri_dev.db-shm numeri_dev.db-wal
+    echo "Cleanup complete."
+  '';
+
   # scripts.hello.exec = ''
   #   echo hello from $GREET
   # '';
-  #
+
   # enterShell = ''
   #   hello
+  #   echo "Run 'devenv cleanup' to remove migrations, snapshots, and the dev database."
   #   git --version
   # '';
 

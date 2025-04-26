@@ -1,8 +1,8 @@
 import Config
 
 # Configure your database
-config :dbk, Dbk.Repo,
-  database: Path.expand("../dbk_dev.db", __DIR__),
+config :numeri, Numeri.Repo,
+  database: Path.expand("../numeri_dev.db", __DIR__),
   pool_size: 5,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
@@ -14,7 +14,7 @@ config :dbk, Dbk.Repo,
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
 # Binding to loopback ipv4 address prevents access from other machines.
-config :dbk, DbkWeb.Endpoint,
+config :numeri, NumeriWeb.Endpoint,
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
@@ -22,8 +22,8 @@ config :dbk, DbkWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "nImWA2sB0xDCf5e95ANt0wAazEuO1hp8DtexaWzIPPWS9pSs3jXrPW2yvxMhy8ox",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:dbk, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:dbk, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:numeri, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:numeri, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -50,17 +50,17 @@ config :dbk, DbkWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :dbk, DbkWeb.Endpoint,
+config :numeri, NumeriWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/dbk_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/numeri_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :dbk, dev_routes: true, token_signing_secret: "sMal5NzinliQXfq7RYb4CxeRAVt9uoZW"
+config :numeri, dev_routes: true, token_signing_secret: "sMal5NzinliQXfq7RYb4CxeRAVt9uoZW"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

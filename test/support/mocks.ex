@@ -1,8 +1,8 @@
-defmodule Dbk.Test.Mocks do
+defmodule Numeri.Test.Mocks do
   @moduledoc """
   Defines mocks used in tests
   """
   
   # Define mock for HTTP client
-  Mox.defmock(Dbk.Http.MockClient, for: Dbk.Http.Client)
+  Mox.defmock(Numeri.Http.MockClient, for: Numeri.Http.Client)
 end

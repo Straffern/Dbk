@@ -1,4 +1,4 @@
-# Dbk
+# Numeri
 
 To start your Phoenix server:
 

@@ -1,9 +1,9 @@
-defmodule Dbk.MixProject do
+defmodule Numeri.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :dbk,
+      app: :numeri,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Dbk.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Dbk.Application, []},
+      mod: {Numeri.Application, []},
       extra_applications: extra_applications(Mix.env())
     ]
   end
@@ -88,10 +88,10 @@ defmodule Dbk.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ash.setup --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind dbk", "esbuild dbk"],
+      "assets.build": ["tailwind numeri", "esbuild numeri"],
       "assets.deploy": [
-        "tailwind dbk --minify",
-        "esbuild dbk --minify",
+        "tailwind numeri --minify",
+        "esbuild numeri --minify",
         "phx.digest"
       ],
       "ash.setup": ["ash.setup", "run priv/repo/seeds.exs"],

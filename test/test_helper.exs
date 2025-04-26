@@ -1,6 +1,6 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(Dbk.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Numeri.Repo, :manual)
 
 # Configure test environment to use mock client
-# Application.put_env(:dbk, :http_client, Dbk.Http.MockClient)
+# Application.put_env(:numeri, :http_client, Numeri.Http.MockClient)
 
