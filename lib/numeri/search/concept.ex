@@ -14,6 +14,7 @@ defmodule Numeri.Search.Concept do
     attribute :description, :string
     # later extend to: https://hexdocs.pm/ash/Ash.Type.Enum.html
     attribute :data_source, :atom, constraints: [one_of: [:dst]]
+    attribute :extra_attributes, :map, description: "Used by the data source fetching logic"
   end
 
   relationships do

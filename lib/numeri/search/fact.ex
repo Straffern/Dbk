@@ -9,6 +9,7 @@ defmodule Numeri.Search.Fact do
 
   attributes do
     integer_primary_key :id
+    attribute :extra_attributes, :map, description: "Used by the data source fetching logic"
   end
 
   relationships do
