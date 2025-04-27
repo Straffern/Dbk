@@ -10,7 +10,7 @@ defmodule Numeri.Repo.Migrations.AddMunicipalities do
       Repo.insert_all("dimensions",
         [ %{
           name: "municipality",
-          description: "Danish municipalities"
+          description: "Municipalities"
         } ], returning: [:id]
       )
 
@@ -29,7 +29,7 @@ defmodule Numeri.Repo.Migrations.AddMunicipalities do
             "kode" => municipality["kode"],
             "region" => municipality["region"]["navn"],
             "bbox" => municipality["bbox"],
-            "visueltcenter" => municipality["visueltcenter"]
+            "centerPoint" => municipality["visueltcenter"]
           }),
           dimension_id: dimension.id
         }
