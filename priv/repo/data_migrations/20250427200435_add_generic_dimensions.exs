@@ -7,15 +7,15 @@ defmodule Numeri.Repo.Migrations.AddGenericDimensions do
     # Create dimensions first
     dimensions = [
       %{
-        name: "age",
+        name: "Age",
         description: "Age in years from 0 to 125",
       },
       %{
-        name: "year",
+        name: "Year",
         description: "Year from 1985 to 2025",
       },
       %{
-        name: "sex",
+        name: "Sex",
         description: "Biological sex options",
       }
     ]
@@ -42,7 +42,7 @@ defmodule Numeri.Repo.Migrations.AddGenericDimensions do
       }
     end)
 
-    sex_values = ["male", "female", "unknown"]
+    sex_values = ["Male", "Female", "Unknown"]
       |> Enum.map(fn sex ->
         %{
           value: JSON.encode!( %{type: :string, value: sex} ),
