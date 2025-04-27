@@ -68,7 +68,6 @@ defmodule Numeri.MixProject do
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.26"},
-      {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:mox, "~> 1.0", only: :test}
@@ -84,9 +83,13 @@ defmodule Numeri.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate_all", "run priv/repo/seeds.exs"],
+      "ecto.migrate_all": [
+        "ecto.migrate --migrations-path=priv/repo/migrations --migrations-path=priv/repo/data_migrations"
+      ],
+      "ecto.migrate_data": ["ecto.migrate --migrations-path=priv/repo/data_migrations"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ash.setup --quiet", "test"],
+      test: ["ash.setup --quiet", "test --warnings-as-errors"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind numeri", "esbuild numeri"],
       "assets.deploy": [
@@ -95,6 +98,9 @@ defmodule Numeri.MixProject do
         "phx.digest"
       ],
       "ash.setup": ["ash.setup", "run priv/repo/seeds.exs"],
+      "ash.migrate_all": [
+        "ash.migrate --migrations-path=priv/repo/migrations --migrations-path=priv/repo/data_migrations"
+      ],
       "phx.routes": ["phx.routes", "ash_authentication.phoenix.routes"]
     ]
   end
