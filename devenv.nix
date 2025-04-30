@@ -59,4 +59,17 @@ in {
   # git-hooks.hooks.shellcheck.enable = true;
 
   # See full reference at https://devenv.sh/reference/options/
+
+  git-hooks.hooks = {
+    mix-format = {
+      enable = true;
+      entry = "${elixir}/bin/mix format";
+      stages = [ "pre-commit" ];
+    };
+    credo = {
+      enable = true;
+      entry = "${elixir}/bin/mix credo --strict";
+      stages = [ "pre-push" ];
+    };
+  };
 }

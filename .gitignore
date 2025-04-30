@@ -43,3 +43,5 @@ npm-debug.log
 /.elixir_ls/
 /.goose/
 /.direnv
+.devenv.flake.nix
+.pre-commit-config.yaml
