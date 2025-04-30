@@ -3,7 +3,7 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
+      "type": "text",
       "source": "id",
       "references": null,
       "allow_nil?": false,
@@ -14,9 +14,49 @@
       "default": "nil",
       "size": null,
       "type": "text",
-      "source": "description",
+      "source": "text",
       "references": null,
       "allow_nil?": false,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "unit",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "utc_datetime",
+      "source": "updated",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "first_period",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "latest_period",
+      "references": null,
+      "allow_nil?": true,
       "primary_key?": false,
       "generated?": false
     },
@@ -26,17 +66,7 @@
       "type": "boolean",
       "source": "active",
       "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "boolean",
-      "source": "has_subjects",
-      "references": null,
-      "allow_nil?": true,
+      "allow_nil?": false,
       "primary_key?": false,
       "generated?": false
     },
@@ -44,20 +74,20 @@
       "default": "nil",
       "size": null,
       "type": "bigint",
-      "source": "parent_id",
+      "source": "subject_id",
       "references": {
-        "name": "subjects_parent_id_fkey",
+        "name": "tables_subject_id_fkey",
         "table": "subjects",
+        "destination_attribute": "id",
         "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "primary_key?": true,
         "multitenancy": {
           "global": null,
-          "strategy": null,
-          "attribute": null
+          "attribute": null,
+          "strategy": null
         },
-        "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
@@ -66,17 +96,17 @@
       "generated?": false
     }
   ],
-  "table": "subjects",
-  "hash": "36C896E78F078BB412FA90BDE514545591E78C2062E441D7FB8B089421E1908E",
+  "table": "tables",
+  "hash": "22DDB2DE54D898FC7F8D49B3E27A40C34E8583F364A678ECE0AD17B3294DD1AC",
   "identities": [],
   "repo": "Elixir.Numeri.Repo",
-  "multitenancy": {
-    "global": null,
-    "strategy": null,
-    "attribute": null
-  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
   "has_create_action": true
 }

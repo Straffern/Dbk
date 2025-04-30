@@ -7,6 +7,7 @@ defmodule Numeri.Search.Dimension do
     repo Numeri.Repo
   end
 
+  @type t :: %__MODULE__{}
   attributes do
     integer_primary_key :id
     attribute :name, :string
@@ -15,6 +16,6 @@ defmodule Numeri.Search.Dimension do
 
   relationships do
     many_to_many :concepts, Search.Concept, through: Search.ConceptDimension
-    has_many :values, Search.Value
+    has_many :dimension_values, Search.DimensionValue
   end
 end

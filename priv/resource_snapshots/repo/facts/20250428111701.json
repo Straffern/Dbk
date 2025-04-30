@@ -13,21 +13,31 @@
     {
       "default": "nil",
       "size": null,
+      "type": "map",
+      "source": "extra_attributes",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
       "type": "bigint",
       "source": "concept_id",
       "references": {
         "name": "facts_concept_id_fkey",
         "table": "concepts",
+        "destination_attribute": "id",
         "on_delete": null,
+        "on_update": null,
+        "deferrable": false,
         "primary_key?": true,
         "multitenancy": {
           "global": null,
-          "strategy": null,
-          "attribute": null
+          "attribute": null,
+          "strategy": null
         },
-        "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
@@ -37,16 +47,16 @@
     }
   ],
   "table": "facts",
-  "hash": "39ED1087BA7E7B1C0852D55C9EC2D34B00F292B91DF87AED293C6127BB9253B8",
+  "hash": "C1724F28AA011A4C7F8FA9E84405145AD656F4FBBB99A4862AD1DD62843A36E7",
   "identities": [],
   "repo": "Elixir.Numeri.Repo",
-  "multitenancy": {
-    "global": null,
-    "strategy": null,
-    "attribute": null
-  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
   "has_create_action": false
 }

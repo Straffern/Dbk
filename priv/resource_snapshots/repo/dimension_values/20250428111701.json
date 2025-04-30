@@ -6,33 +6,43 @@
       "type": "bigint",
       "source": "id",
       "references": null,
-      "primary_key?": true,
       "allow_nil?": false,
+      "primary_key?": true,
       "generated?": true
     },
     {
       "default": "nil",
       "size": null,
       "type": "map",
-      "source": "extra_attributes",
+      "source": "value",
       "references": null,
-      "primary_key?": false,
       "allow_nil?": true,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "map",
+      "source": "metadata",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
       "generated?": false
     },
     {
       "default": "nil",
       "size": null,
       "type": "bigint",
-      "source": "concept_id",
+      "source": "dimension_id",
       "references": {
-        "name": "facts_concept_id_fkey",
-        "table": "concepts",
-        "primary_key?": true,
+        "name": "dimension_values_dimension_id_fkey",
+        "table": "dimensions",
         "destination_attribute": "id",
         "on_delete": null,
         "on_update": null,
         "deferrable": false,
+        "primary_key?": true,
         "multitenancy": {
           "global": null,
           "attribute": null,
@@ -41,13 +51,13 @@
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
-      "primary_key?": false,
       "allow_nil?": true,
+      "primary_key?": false,
       "generated?": false
     }
   ],
-  "table": "facts",
-  "hash": "626C160F9D10A44039EFB9FDBCB81406588AC25C1F2DF0ECDD68C2D7B1C8A877",
+  "table": "dimension_values",
+  "hash": "919EACB797FA0924D6715B6347B51AEB4A5A2B8361D4C19354058ECBBA1D53C2",
   "identities": [],
   "repo": "Elixir.Numeri.Repo",
   "custom_indexes": [],

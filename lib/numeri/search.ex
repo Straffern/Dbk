@@ -6,8 +6,8 @@ defmodule Numeri.Search do
     resource Numeri.Search.Concept
     resource Numeri.Search.Dimension
     resource Numeri.Search.ConceptDimension
-    resource Numeri.Search.Value
+    resource Numeri.Search.DimensionValue
     resource Numeri.Search.Fact
-    resource Numeri.Search.FactValue
+    resource Numeri.Search.FactDimensionValue
   end
 end

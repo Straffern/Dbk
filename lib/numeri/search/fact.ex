@@ -14,6 +14,6 @@ defmodule Numeri.Search.Fact do
 
   relationships do
     belongs_to :concept, Search.Concept, attribute_type: :integer
-    many_to_many :values, Search.Value, through: Search.FactValue
+    many_to_many :dimension_values, Search.DimensionValue, through: Search.FactDimensionValue
   end
 end

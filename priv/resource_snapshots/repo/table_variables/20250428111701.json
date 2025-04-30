@@ -18,16 +18,16 @@
       "references": {
         "name": "table_variables_table_id_fkey",
         "table": "tables",
+        "destination_attribute": "id",
         "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "primary_key?": true,
         "multitenancy": {
           "global": null,
-          "strategy": null,
-          "attribute": null
+          "attribute": null,
+          "strategy": null
         },
-        "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
@@ -43,16 +43,16 @@
       "references": {
         "name": "table_variables_variable_id_fkey",
         "table": "variables",
+        "destination_attribute": "id",
         "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "primary_key?": true,
         "multitenancy": {
           "global": null,
-          "strategy": null,
-          "attribute": null
+          "attribute": null,
+          "strategy": null
         },
-        "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
@@ -62,7 +62,7 @@
     }
   ],
   "table": "table_variables",
-  "hash": "76D2FAC304E32626ADC9232A483A7761FDBBCDF1AAF8BBB7C108A3A271E6908C",
+  "hash": "4570AB6916F9880F03A9A5D48BD7CED7F9780998AF9153AB826CEE4CF02E0528",
   "identities": [
     {
       "name": "unique_table_variable",
@@ -75,13 +75,13 @@
     }
   ],
   "repo": "Elixir.Numeri.Repo",
-  "multitenancy": {
-    "global": null,
-    "strategy": null,
-    "attribute": null
-  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
   "has_create_action": true
 }

@@ -22,7 +22,7 @@
     }
   ],
   "table": "users",
-  "hash": "C42F5B3CB17AB4A6B8C12A5043668A6C1C1778210A804924113AF51695678339",
+  "hash": "8382E07AD23B38752485542D9AE4CF7D998724F30B9D21FF01033E99562BC3D3",
   "identities": [
     {
       "name": "unique_email",
@@ -34,13 +34,13 @@
     }
   ],
   "repo": "Elixir.Numeri.Repo",
-  "multitenancy": {
-    "global": null,
-    "strategy": null,
-    "attribute": null
-  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
   "has_create_action": true
 }

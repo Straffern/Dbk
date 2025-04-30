@@ -3,20 +3,30 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
-      "source": "id",
+      "type": "text",
+      "source": "jti",
       "references": null,
       "allow_nil?": false,
       "primary_key?": true,
-      "generated?": true
+      "generated?": false
     },
     {
       "default": "nil",
       "size": null,
       "type": "text",
-      "source": "name",
+      "source": "subject",
       "references": null,
-      "allow_nil?": true,
+      "allow_nil?": false,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "utc_datetime",
+      "source": "expires_at",
+      "references": null,
+      "allow_nil?": false,
       "primary_key?": false,
       "generated?": false
     },
@@ -24,19 +34,9 @@
       "default": "nil",
       "size": null,
       "type": "text",
-      "source": "description",
+      "source": "purpose",
       "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "text",
-      "source": "data_source",
-      "references": null,
-      "allow_nil?": true,
+      "allow_nil?": false,
       "primary_key?": false,
       "generated?": false
     },
@@ -44,15 +44,35 @@
       "default": "nil",
       "size": null,
       "type": "map",
-      "source": "extra_attributes",
+      "source": "extra_data",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
       "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "utc_datetime_usec",
+      "source": "created_at",
+      "references": null,
+      "allow_nil?": false,
+      "primary_key?": false,
+      "generated?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "utc_datetime_usec",
+      "source": "updated_at",
+      "references": null,
+      "allow_nil?": false,
+      "primary_key?": false,
+      "generated?": false
     }
   ],
-  "table": "concepts",
-  "hash": "A4723B9E4D5208CED8BD939304F5855A1F074D3D3AFF19E3F632B292C0ABD707",
+  "table": "tokens",
+  "hash": "8E248ED59B36E9D40C785658C2A15502929B2F543824DA873A1A6D8E4717BFBD",
   "identities": [],
   "repo": "Elixir.Numeri.Repo",
   "custom_indexes": [],
@@ -60,8 +80,8 @@
   "custom_statements": [],
   "multitenancy": {
     "global": null,
-    "strategy": null,
-    "attribute": null
+    "attribute": null,
+    "strategy": null
   },
-  "has_create_action": false
+  "has_create_action": true
 }

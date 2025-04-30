@@ -13,8 +13,8 @@
     {
       "default": "nil",
       "size": null,
-      "type": "text",
-      "source": "name",
+      "type": "bigint",
+      "source": "fact_id",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
@@ -23,35 +23,25 @@
     {
       "default": "nil",
       "size": null,
-      "type": "text",
-      "source": "description",
-      "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "text",
-      "source": "data_source",
+      "type": "bigint",
+      "source": "dimension_value_id",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
       "generated?": false
     }
   ],
-  "table": "concepts",
-  "hash": "851F9015F379F95D25C6DBC091B0387FEE330EC64D2AA0D20603688D707811FD",
+  "table": "fact_dimension_values",
+  "hash": "5D36E8E6C46568C6896450A12EC06F1147C7BDBE9455E449FF73D48D1F892CB6",
   "identities": [],
   "repo": "Elixir.Numeri.Repo",
-  "multitenancy": {
-    "global": null,
-    "strategy": null,
-    "attribute": null
-  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
   "has_create_action": false
 }

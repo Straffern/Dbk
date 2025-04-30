@@ -35,15 +35,6 @@ defmodule Numeri.Repo.Migrations.Init do
              name: "variable_values_unique_value_index"
            )
 
-    create table(:values, primary_key: false) do
-      add :dimension_id,
-          references(:dimensions, column: :id, name: "values_dimension_id_fkey", type: :bigint)
-
-      add :metadata, :map
-      add :value, :map
-      add :id, :bigserial, null: false, primary_key: true
-    end
-
     create table(:users, primary_key: false) do
       add :email, :citext, null: false
       add :id, :uuid, null: false, primary_key: true
@@ -126,11 +117,12 @@ defmodule Numeri.Repo.Migrations.Init do
       add :concept_id,
           references(:concepts, column: :id, name: "facts_concept_id_fkey", type: :bigint)
 
+      add :extra_attributes, :map
       add :id, :bigserial, null: false, primary_key: true
     end
 
-    create table(:fact_values, primary_key: false) do
-      add :value_id, :bigint
+    create table(:fact_dimension_values, primary_key: false) do
+      add :dimension_value_id, :bigint
       add :fact_id, :bigint
       add :id, :bigserial, null: false, primary_key: true
     end
@@ -141,7 +133,21 @@ defmodule Numeri.Repo.Migrations.Init do
       add :id, :bigserial, null: false, primary_key: true
     end
 
+    create table(:dimension_values, primary_key: false) do
+      add :dimension_id,
+          references(:dimensions,
+            column: :id,
+            name: "dimension_values_dimension_id_fkey",
+            type: :bigint
+          )
+
+      add :metadata, :map
+      add :value, :map
+      add :id, :bigserial, null: false, primary_key: true
+    end
+
     create table(:concepts, primary_key: false) do
+      add :extra_attributes, :map
       add :data_source, :text
       add :description, :text
       add :name, :text
@@ -160,9 +166,13 @@ defmodule Numeri.Repo.Migrations.Init do
 
     drop table(:concepts)
 
+    drop constraint(:dimension_values, "dimension_values_dimension_id_fkey")
+
+    drop table(:dimension_values)
+
     drop table(:dimensions)
 
-    drop table(:fact_values)
+    drop table(:fact_dimension_values)
 
     drop constraint(:facts, "facts_concept_id_fkey")
 
@@ -191,10 +201,6 @@ defmodule Numeri.Repo.Migrations.Init do
     drop_if_exists unique_index(:users, [:email], name: "users_unique_email_index")
 
     drop table(:users)
-
-    drop constraint(:values, "values_dimension_id_fkey")
-
-    drop table(:values)
 
     drop_if_exists unique_index(:variable_values, [:value_id, :variable_id],
                      name: "variable_values_unique_value_index"

@@ -3,18 +3,18 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
+      "type": "uuid",
       "source": "id",
       "references": null,
       "allow_nil?": false,
       "primary_key?": true,
-      "generated?": true
+      "generated?": false
     },
     {
       "default": "nil",
       "size": null,
-      "type": "map",
-      "source": "value",
+      "type": "text",
+      "source": "value_id",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
@@ -23,8 +23,8 @@
     {
       "default": "nil",
       "size": null,
-      "type": "map",
-      "source": "metadata",
+      "type": "text",
+      "source": "text",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
@@ -33,40 +33,50 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
-      "source": "dimension_id",
+      "type": "text",
+      "source": "variable_id",
       "references": {
-        "name": "values_dimension_id_fkey",
-        "table": "dimensions",
-        "on_delete": null,
+        "name": "variable_values_variable_id_fkey",
+        "table": "variables",
+        "destination_attribute": "id",
+        "on_delete": "delete",
+        "on_update": null,
+        "deferrable": false,
         "primary_key?": true,
         "multitenancy": {
           "global": null,
-          "strategy": null,
-          "attribute": null
+          "attribute": null,
+          "strategy": null
         },
-        "destination_attribute": "id",
-        "on_update": null,
-        "deferrable": false,
         "destination_attribute_default": null,
         "destination_attribute_generated": null
       },
-      "allow_nil?": true,
+      "allow_nil?": false,
       "primary_key?": false,
       "generated?": false
     }
   ],
-  "table": "values",
-  "hash": "908851E1C25B4474B1841C2B6514035D5887BAF66D530B4220D767C7F3CAB1A7",
-  "identities": [],
+  "table": "variable_values",
+  "hash": "6EE7C0C57C95693CED28C143A2CAD9FA2FE8BFBA4A29ECB85487D578BD8FDA91",
+  "identities": [
+    {
+      "name": "unique_value",
+      "keys": [
+        "value_id",
+        "variable_id"
+      ],
+      "base_filter": null,
+      "index_name": "variable_values_unique_value_index"
+    }
+  ],
   "repo": "Elixir.Numeri.Repo",
-  "multitenancy": {
-    "global": null,
-    "strategy": null,
-    "attribute": null
-  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
-  "has_create_action": false
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
+  "has_create_action": true
 }

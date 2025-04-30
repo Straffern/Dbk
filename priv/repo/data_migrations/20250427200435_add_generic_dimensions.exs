@@ -51,8 +51,8 @@ defmodule Numeri.Repo.Migrations.AddGenericDimensions do
       end)
 
     # Insert all values in batches
-    Repo.insert_all("values", age_values)
-    Repo.insert_all("values", year_values)
-    Repo.insert_all("values", sex_values)
+    Repo.insert_all("dimension_values", age_values)
+    Repo.insert_all("dimension_values", year_values)
+    Repo.insert_all("dimension_values", sex_values)
   end
 end

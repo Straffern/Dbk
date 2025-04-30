@@ -3,18 +3,28 @@
     {
       "default": "nil",
       "size": null,
-      "type": "text",
+      "type": "bigint",
       "source": "id",
       "references": null,
       "allow_nil?": false,
       "primary_key?": true,
+      "generated?": true
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "name",
+      "references": null,
+      "allow_nil?": true,
+      "primary_key?": false,
       "generated?": false
     },
     {
       "default": "nil",
       "size": null,
       "type": "text",
-      "source": "text",
+      "source": "description",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
@@ -23,8 +33,8 @@
     {
       "default": "nil",
       "size": null,
-      "type": "bigint",
-      "source": "order",
+      "type": "text",
+      "source": "data_source",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
@@ -33,35 +43,25 @@
     {
       "default": "nil",
       "size": null,
-      "type": "boolean",
-      "source": "elimination",
-      "references": null,
-      "allow_nil?": true,
-      "primary_key?": false,
-      "generated?": false
-    },
-    {
-      "default": "nil",
-      "size": null,
-      "type": "boolean",
-      "source": "time",
+      "type": "map",
+      "source": "extra_attributes",
       "references": null,
       "allow_nil?": true,
       "primary_key?": false,
       "generated?": false
     }
   ],
-  "table": "variables",
-  "hash": "90A55315521D12C04B2D409920437FDD06711824C01E6230E6500999F1104E5A",
+  "table": "concepts",
+  "hash": "6DE66AE2BDF3735F4E02E24F2E6FC9E94719D37DA60F1ECC76222336BB1E33F1",
   "identities": [],
   "repo": "Elixir.Numeri.Repo",
-  "multitenancy": {
-    "global": null,
-    "strategy": null,
-    "attribute": null
-  },
   "custom_indexes": [],
   "base_filter": null,
   "custom_statements": [],
-  "has_create_action": true
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
+  "has_create_action": false
 }

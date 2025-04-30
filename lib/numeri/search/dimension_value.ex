@@ -1,15 +1,16 @@
-defmodule Numeri.Search.Value do
+defmodule Numeri.Search.DimensionValue do
   use Ash.Resource, otp_app: :numeri, domain: Numeri.Search, data_layer: AshSqlite.DataLayer
   alias Numeri.Search
 
   sqlite do
-    table "values"
+    table "dimension_values"
     repo Numeri.Repo
   end
 
   attributes do
     integer_primary_key :id
 
+    @type t :: %__MODULE__{}
     attribute :value, :union do
       constraints types: [
                     int: [

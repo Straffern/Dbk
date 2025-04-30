@@ -34,6 +34,6 @@ defmodule Numeri.Repo.Migrations.AddPostalCodes do
           dimension_id: dimension.id
         }
       end)
-    Repo.insert_all("values", rows)
+    Repo.insert_all("dimension_values", rows)
   end
 end
